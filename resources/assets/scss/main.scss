@@ -9,8 +9,7 @@
 
 .row {
 	margin: 1em 0;
-	border: 2px dashed gray;
-	
+	//border: 2px dashed gray;
 }
 
 .col {
@@ -18,7 +17,7 @@
 }
 
 .col-inner {
-	border: 2px dashed orange;
+	//border: 2px dashed orange;
 }
 
 .meta {
@@ -38,7 +37,9 @@
 .addButton {
 	display: block;
 	width: 100%;
+	box-sizing: border-box;
 	padding: 1em 0;
 	text-align: center;
 	cursor: pointer;
+	border: 1px dashed orange;
 }

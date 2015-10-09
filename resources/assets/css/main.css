@@ -5972,14 +5972,10 @@ button.close {
  */
 /* foo */
 .row {
-  margin: 1em 0;
-  border: 2px dashed gray; }
+  margin: 1em 0; }
 
 .col {
   margin: 0.5em 0; }
-
-.col-inner {
-  border: 2px dashed orange; }
 
 .meta {
   padding: 0.5em;
@@ -5999,6 +5995,8 @@ button.close {
 .addButton {
   display: block;
   width: 100%;
+  box-sizing: border-box;
   padding: 1em 0;
   text-align: center;
-  cursor: pointer; }
+  cursor: pointer;
+  border: 1px dashed orange; }

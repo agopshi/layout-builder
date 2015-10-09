@@ -8,4 +8,4 @@
 <script src="<?php echo LB_PUBLIC_URL; ?>js/vendor.js"></script>
 
 <script src="<?php echo LB_PUBLIC_URL; ?>js/modules/common.js"></script>
-<script src="<?php echo LB_PUBLIC_URL; ?>js/modules/layout.js"></script>
+<script src="<?php echo LB_PUBLIC_URL; ?>js/modules/builder.js"></script>

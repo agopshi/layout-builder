@@ -1,6 +1,6 @@
 (function(angular) {
 	var app = window.app,
-		module = app.modules.layout = angular.module('app.layout', [
+		module = app.modules.builder = angular.module('app.builder', [
 			'app.common',
 			'ui.bootstrap'
 		]);
@@ -17,27 +17,6 @@
 
 	function mainController($scope, util)
 	{
-		function createRow()
-		{
-			return {
-				cols: []
-			};
-		}
-
-		function createCol()
-		{
-			return {
-				elems: []
-			}
-		}
-
-		function createElem()
-		{
-			return {
-				data: {}
-			}
-		};
-
 		/**
 		 * $scope.state // state stack for undo/redo
 		 *   state 0
@@ -83,18 +62,6 @@
 			}
 			$scope.states.pop();
 			$scope.state = $scope.states[$scope.states.length - 1];
-		};
-
-		$scope.addElement = function(col) {
-			col.elems.push(createElem());
-		};
-
-		$scope.addColumn = function(row) {
-			row.cols.push(createCol());
-		};
-
-		$scope.addRow = function() {
-			$scope.state.rows.push(createRow());
 		};
 	}
 
