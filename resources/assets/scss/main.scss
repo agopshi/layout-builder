@@ -1,0 +1,44 @@
+//@import 'vendor/normalize';
+@import 'vendor/jquery-ui.structure';
+//@import 'vendor/skeleton';
+@import 'vendor/bootstrap';
+
+@import 'partials/mixins';
+
+/* foo */
+
+.row {
+	margin: 1em 0;
+	border: 2px dashed gray;
+	
+}
+
+.col {
+	margin: 0.5em 0;
+}
+
+.col-inner {
+	border: 2px dashed orange;
+}
+
+.meta {
+	padding: 0.5em;
+	background: #ddd;
+	@include cf;
+}
+
+.meta-left {
+	float: left;
+}
+
+.meta-right {
+	float: right;
+}
+
+.addButton {
+	display: block;
+	width: 100%;
+	padding: 1em 0;
+	text-align: center;
+	cursor: pointer;
+}
