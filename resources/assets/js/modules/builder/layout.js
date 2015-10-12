@@ -3,12 +3,19 @@
 		module = app.modules.builder;
 
 	module.directive('appLayout', [function() {
-		function controller($scope)
+		function controller($scope, $uibModal)
 		{
-			function createRow()
+			function createRow(type)
 			{
+				if (typeof type !== 'string')
+				{
+					type = 'row';
+				}
+
 				return {
-					type: 'row',
+					type: type,
+
+					// for rows
 					cols: [],
 
 					// for element types other than row
@@ -17,7 +24,26 @@
 			}
 
 			$scope.addRow = function() {
-				$scope.rows.push(createRow());
+				var modal = $uibModal.open({
+					animation: false,
+					templateUrl: '/templates/builder/element_picker.html',
+					controller: 'ElementPickerController',
+					resolve: {
+						// parameters to controller as functions
+					}
+				});
+
+				modal.result
+					.then(function(result) {
+						$scope.rows.push(createRow(result));
+					})
+					.catch(function(reason) {
+						// element picker was canceled
+					});
+			};
+
+			$scope.removeRow = function(idx) {
+				$scope.rows.splice(idx, 1);
 			};
 
 			$scope.rowSortable = {
@@ -31,7 +57,7 @@
 			scope: {
 				rows: '=appLayout'
 			},
-			controller: ['$scope', controller]
+			controller: ['$scope', '$uibModal', controller]
 		};
 	}]);
 
@@ -99,9 +125,42 @@
 		return {
 			templateUrl: '/builder/templates/row.html',
 			scope: {
-				row: '=appLayoutRow'
+				row: '=appLayoutRow',
+				remove: '&'
 			},
 			controller: ['$scope', controller]
 		};
 	}]);
+
+	function elementPickerController($scope, $modalInstance)
+	{
+		/**
+		 * @todo Abstract out. Element types are provided via application.
+		 */
+		$scope.elementTypes = [
+			{
+				label: 'Row',
+				code: 'row'
+			},
+			{
+				label: 'Lorem',
+				code: 'lorem'
+			}
+		];
+
+		$scope.elementType = 'row';
+
+		$scope.add = function() {
+			$modalInstance.close($scope.elementType);
+		};
+
+		$scope.cancel = function() {
+			$modalInstance.dismiss('cancel');
+		};
+	}
+
+	module.controller('ElementPickerController', elementPickerController, [
+		'$scope',
+		'$modalInstance'
+	]);
 })(angular);
