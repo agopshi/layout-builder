@@ -5922,27 +5922,28 @@ button.close {
  */
 /* foo */
 .row {
-  margin: 1em 0; }
+  margin: 0.5em 0; }
 
 .col {
   margin: 0.5em 0; }
 
-.meta {
+.lb-meta {
   padding: 0.5em;
+  font-size: 0.8em;
   background: #ddd; }
-  .meta:before, .meta:after {
+  .lb-meta:before, .lb-meta:after {
     content: ' ';
     display: table; }
-  .meta:after {
+  .lb-meta:after {
     clear: both; }
 
-.meta-left {
+.lb-meta-left {
   float: left; }
 
-.meta-right {
+.lb-meta-right {
   float: right; }
 
-.addButton {
+.lb-addButton {
   display: block;
   width: 100%;
   box-sizing: border-box;

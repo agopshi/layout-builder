@@ -8,21 +8,49 @@
 			function createRow()
 			{
 				return {
-					cols: []
+					type: 'row',
+					cols: [],
+
+					// for element types other than row
+					data: {}
 				};
 			}
 
 			$scope.addRow = function() {
 				$scope.rows.push(createRow());
 			};
+
+			$scope.rowSortable = {
+				handle: '.lb-meta',
+				connectWith: '.lb-rows'
+			};
 		}
 
 		return {
 			templateUrl: '/builder/templates/layout.html',
 			scope: {
-				rows: '='
+				rows: '=appLayout'
 			},
 			controller: ['$scope', controller]
+		};
+	}]);
+
+	module.directive('appLayoutNested', ['$compile', function($compile) {
+		function link(scope, elem, attrs)
+		{
+			var html = '<div app-layout="rows"></div>';
+
+			// dynamically compile the HTML so that we don't put Angular into an infinite loop
+			$compile(html)(scope, function(innerElem, scope) {
+				elem.append(innerElem);
+			});
+		}
+
+		return {
+			link: link,
+			scope: {
+				rows: '=appLayoutNested'
+			}
 		};
 	}]);
 
@@ -34,22 +62,9 @@
 				return {
 					bp: 'sm',
 					size: 6,
-					elems: []
+					rows: []
 				}
 			}
-
-			function createElem()
-			{
-				return {
-					type: 'row',
-					data: {},
-					cols: []
-				}
-			};
-
-			$scope.addElement = function(col) {
-				col.elems.push(createElem());
-			};
 
 			$scope.addColumn = function(idx) {
 				var cols = $scope.row.cols,
@@ -69,35 +84,24 @@
 				$scope.row.cols.splice(idx, 1);
 			};
 
-			$scope.COL_BPS = ['xs', 'sm', 'md', 'lg'];
-			$scope.COL_SIZES = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+			/**
+			 * @todo Abstract these out. Grids should be configurable.
+			 */
+			$scope.colBps = ['xs', 'sm', 'md', 'lg'];
+			$scope.colSizes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+
+			$scope.colSortable = {
+				handle: '.lb-meta',
+				connectWith: '.lb-cols'
+			};
 		}
 
 		return {
 			templateUrl: '/builder/templates/row.html',
 			scope: {
-				row: '='
+				row: '=appLayoutRow'
 			},
 			controller: ['$scope', controller]
-		};
-	}]);
-
-	module.directive('appLayoutRowNested', ['$compile', function($compile) {
-		function link(scope, elem, attrs)
-		{
-			var rowHtml = '<div app-layout-row row="row"></div>';
-
-			// dynamically compile the HTML so that we don't put Angular into an infinite loop
-			$compile(rowHtml)(scope, function(rowElem, scope) {
-				elem.append(rowElem);
-			});
-		}
-
-		return {
-			link: link,
-			scope: {
-				row: '='
-			}
 		};
 	}]);
 })(angular);

@@ -1,54 +1,51 @@
 <script type="text/ng-template" id="/builder/templates/layout.html">
-	<div ng-repeat="row in rows">
-		<div app-layout-row row="row"></div>
+	<div ui-sortable="rowSortable" ng-model="rows" class="lb-rows">
+		<div ng-repeat="row in rows">
+			<div ng-switch="row.type">
+				<div ng-switch-when="row">
+					<div app-layout-row="row" class="row"></div>
+				</div>
+				<div ng-switch-when="lorem">
+					<p>Lorem ipsum dolor</p>
+				</div>
+			</div>
+		</div>
 	</div>
 
 	<div class="row">
-		<div class="addButton" ng-click="addRow()">Add Row</div>
+		<div class="lb-addButton" ng-click="addRow()">Add Row or Element</div>
 	</div>
 </script>
 
 <script type="text/ng-template" id="/builder/templates/row.html">
-	<div class="row hoverIntent">
-		<div class="meta">
-			<div class="meta-left">
-				Row
-			</div>
-			<div class="meta-right">
-			</div>
+	<div class="lb-meta">
+		<div class="lb-meta-left">
+			Row
 		</div>
+		<div class="lb-meta-right">
+		</div>
+	</div>
 
-		<div ng-repeat="col in row.cols" class="col col-{{col.bp}}-{{col.size}} hoverIntent">
-			<div class="col-inner">
-				<div class="meta">
-					<div class="meta-left">
-						<button ng-click="addColumn($index)">+</button>
-						Col {{ $index }}
-						<button ng-click="removeColumn($index)">-</button>
-					</div>
-					<div class="meta-right">
-						<select ng-model="col.bp" ng-options="bp for bp in COL_BPS"></select>
-						<select ng-model="col.size" ng-options="size for size in COL_SIZES"></select>
-						<button ng-click="addColumn()">+</button>
-					</div>
+	<div ui-sortable="colSortable" ng-model="row.cols" class="lb-cols">
+		<div ng-repeat="col in row.cols" class="col col-{{col.bp}}-{{col.size}}">
+			<div class="lb-meta">
+				<div class="lb-meta-left">
+					<button ng-click="addColumn($index)">+</button>
+					Column
+					<button ng-click="removeColumn($index)">-</button>
 				</div>
-
-				<div ng-repeat="elem in col.elems" class="elem">
-					<div ng-switch="elem.type">
-						<div ng-switch-when="row">
-							<div app-layout-row-nested row="elem"></div>
-						</div>
-					</div>
+				<div class="lb-meta-right">
+					<select ng-model="col.bp" ng-options="bp for bp in colBps"></select>
+					<select ng-model="col.size" ng-options="size for size in colSizes"></select>
+					<button ng-click="addColumn()">+</button>
 				</div>
-
-				<div class="addButton" ng-click="addElement(col)">Add Element</div>
 			</div>
-		</div>
 
-		<div class="col col-sm-6">
-			<div class="col-inner">
-				<div class="addButton" ng-click="addColumn()" ng-if="row.cols.length === 0">Add Column</div>
-			</div>
+			<div app-layout-nested="col.rows"></div>
 		</div>
+	</div>
+
+	<div class="col col-sm-6" ng-if="row.cols.length === 0">
+		<div class="lb-addButton" ng-click="addColumn()" >Add Column</div>
 	</div>
 </script>

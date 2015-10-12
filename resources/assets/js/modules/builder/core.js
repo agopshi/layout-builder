@@ -2,7 +2,8 @@
 	var app = window.app,
 		module = app.modules.builder = angular.module('app.builder', [
 			'app.common',
-			'ui.bootstrap'
+			'ui.bootstrap',
+			'ui.sortable'
 		]);
 
 	function config($httpProvider)
