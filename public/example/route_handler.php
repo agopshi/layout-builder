@@ -8,4 +8,4 @@ $elementProvider = require __DIR__ . '/inc/element_provider.php';
 
 $routeHandler = new LayoutBuilder\RouteHandler($elementProvider);
 
-$routeHandler->dispatch($_REQUEST);
+$routeHandler->dispatch();

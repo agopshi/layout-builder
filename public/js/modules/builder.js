@@ -8,7 +8,10 @@
 
 	function config($httpProvider)
 	{
-		$httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+		var headers = $httpProvider.defaults.headers;
+
+		// send AJAX indicator
+		headers.common['X-Requested-With'] = 'XMLHttpRequest';
 	}
 
 	module.config([
@@ -30,7 +33,7 @@
 		 *         cols // list of columns                                                |
 		 *           col 0                                                                |
 		 *           col 1                                                                |
-		 *             elems // list of elements in a column                              |
+		 *             rows // list of rows OR elements in a column                       |
 		 *               elem 1                                                           |
 		 *               elem 2 // an element could also be a row, which would repeat  }--+
 		 *               elem 3
@@ -69,6 +72,43 @@
 	module.controller('MainController', mainController, [
 		'$scope',
 		'util'
+	]);
+})(angular);
+
+(function(angular) {
+	var app = window.app,
+		module = app.modules.builder;
+
+	function elementPickerController($scope, $modalInstance)
+	{
+		/**
+		 * @todo Abstract out. Element types are provided via application.
+		 */
+		$scope.elementTypes = [
+			{
+				label: 'Row',
+				code: 'row'
+			},
+			{
+				label: 'Lorem',
+				code: 'lorem'
+			}
+		];
+
+		$scope.elementType = 'row';
+
+		$scope.add = function() {
+			$modalInstance.close($scope.elementType);
+		};
+
+		$scope.cancel = function() {
+			$modalInstance.dismiss('cancel');
+		};
+	}
+
+	module.controller('ElementPickerController', elementPickerController, [
+		'$scope',
+		'$modalInstance'
 	]);
 })(angular);
 
@@ -153,6 +193,51 @@
 			}
 		};
 	}]);
+})(angular);
+
+(function(angular) {
+	var app = window.app,
+		module = app.modules.builder;
+
+	module.directive('appLayoutElement', ['$http', function($http) {
+		function render(elem, domElem)
+		{
+			$http({
+				method: 'POST',
+				url: app.routeUrl,
+				data: {
+					action: 'renderElement',
+					elementType: elem.type,
+					elementData: elem.data
+				}
+			}).then(function(resp) {
+				domElem.html(resp.data);
+			}).catch(function(error) {
+				// TODO
+			});
+		}
+
+		function link(scope, elem, attrs)
+		{
+			// render the element whenever its data changes
+			scope.$watch(scope.elem, function(oldValue, newValue) {
+				// note that this will be called the first time without any changes
+				render(scope.elem, elem);
+			}, true);
+		}
+
+		return {
+			scope: {
+				elem: '=appLayoutElement',
+			},
+			link: link
+		};
+	}]);
+})(angular);
+
+(function(angular) {
+	var app = window.app,
+		module = app.modules.builder;
 
 	module.directive('appLayoutRow', [function() {
 		function controller($scope)
@@ -205,36 +290,4 @@
 			controller: ['$scope', controller]
 		};
 	}]);
-
-	function elementPickerController($scope, $modalInstance)
-	{
-		/**
-		 * @todo Abstract out. Element types are provided via application.
-		 */
-		$scope.elementTypes = [
-			{
-				label: 'Row',
-				code: 'row'
-			},
-			{
-				label: 'Lorem',
-				code: 'lorem'
-			}
-		];
-
-		$scope.elementType = 'row';
-
-		$scope.add = function() {
-			$modalInstance.close($scope.elementType);
-		};
-
-		$scope.cancel = function() {
-			$modalInstance.dismiss('cancel');
-		};
-	}
-
-	module.controller('ElementPickerController', elementPickerController, [
-		'$scope',
-		'$modalInstance'
-	]);
 })(angular);

@@ -1,7 +1,7 @@
 <script>
 	window.app = {
 		modules: {},
-		baseUrl: '<?php echo LB_BASE_URL; ?>'
+		routeUrl: '<?php echo LB_PUBLIC_URL; ?>example/route_handler.php'
 	};
 </script>
 

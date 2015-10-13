@@ -26,17 +26,24 @@ class RouteHandler
 
 	/**
 	 * Dispatches a Layout Builder route.
-	 * @param  array &$data POSTed data. Typically just $_POST.
 	 * @return void        
 	 */
-	public function dispatch(&$data)
+	public function dispatch()
 	{
-		if (empty($data['action']))
+		$dataStr = file_get_contents('php://input');
+		$data = json_decode($dataStr, false);
+
+		if ($data === false || !is_object($data))
+		{
+			throw new RouteException('Route data not properly formatted JSON!');
+		}
+
+		if (empty($data->action))
 		{
 			throw new RouteException('No action specified!');;
 		}
 
-		$action = $this->_sanitizeIdentifier($data['action']);
+		$action = $this->_sanitizeIdentifier($data->action);
 
 		$method = 'handle_' . $action;
 
@@ -50,29 +57,14 @@ class RouteHandler
 
 	public function handle_renderElement(&$data)
 	{
-		if (empty($data['element_type']))
+		if (empty($data->elementType))
 		{
 			throw new RouteException('Element type not provided!');
 		}
 
-		$elementType = $this->_sanitizeIdentifier($data['element_type']);
+		$elementType = $this->_sanitizeIdentifier($data->elementType);
 
-		$elementData = null;
-
-		if (!empty($data['element_data']))
-		{
-			if (!is_string($data['element_data']))
-			{
-				throw new RouteException('Element data not provided as a JSON string!');
-			}
-
-			$elementData = json_decode($data['element_data'], false);
-
-			if ($elementData === false)
-			{
-				throw new RouteException('Element data not valid JSON!');
-			}
-		}
+		$elementData = isset($data->elementData) ? $data->elementData : null;
 
 		$this->_prepareJsonOutput();
 

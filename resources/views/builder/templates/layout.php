@@ -46,8 +46,8 @@
 			</div>
 		</div>
 
-		<div ng-switch-when="lorem">
-			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur metus urna, pharetra vel nisi ut, gravida feugiat diam. Mauris lobortis vel risus vitae ornare. Ut fermentum odio at mollis aliquet. Proin quis justo interdum, interdum dui vitae, hendrerit sapien.</p>
+		<div ng-switch-default>
+			<div app-layout-element="row"></div>
 		</div>
 	</div>
 </script>

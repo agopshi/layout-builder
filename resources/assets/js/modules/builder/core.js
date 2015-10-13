@@ -8,7 +8,10 @@
 
 	function config($httpProvider)
 	{
-		$httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+		var headers = $httpProvider.defaults.headers;
+
+		// send AJAX indicator
+		headers.common['X-Requested-With'] = 'XMLHttpRequest';
 	}
 
 	module.config([
@@ -30,7 +33,7 @@
 		 *         cols // list of columns                                                |
 		 *           col 0                                                                |
 		 *           col 1                                                                |
-		 *             elems // list of elements in a column                              |
+		 *             rows // list of rows OR elements in a column                       |
 		 *               elem 1                                                           |
 		 *               elem 2 // an element could also be a row, which would repeat  }--+
 		 *               elem 3
