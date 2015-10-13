@@ -4,11 +4,7 @@
 
 	function elementPickerController($scope, $modalInstance)
 	{
-		/**
-		 * @todo Abstract out. Element types are provided via application.
-		 */
 		$scope.elementTypes = app.ELEMENT_TYPES;
-
 		$scope.elementType = 'row';
 
 		$scope.add = function() {
@@ -20,8 +16,9 @@
 		};
 	}
 
-	module.controller('ElementPickerController', elementPickerController, [
+	module.controller('ElementPickerController', [
 		'$scope',
-		'$modalInstance'
+		'$modalInstance',
+		elementPickerController	
 	]);
 })(angular);

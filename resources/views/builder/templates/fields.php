@@ -1,3 +1,9 @@
+<script type="text/ng-template" id="/builder/templates/fields.html">
+	<pre>{{fields | json}}</pre>
+	<pre>{{values | json}}</pre>
+</script>
+
+
 <script type="text/ng-template" id="/templates/property-editor.html">
 	<div ng-repeat="(k, v) in properties">
 		<div class="editor-property" ng-show="filter(k, v)">
@@ -98,13 +104,4 @@
 			<button class="btn btn-default btn-xs" ng-click="newProperty()">New Property</button>
 		</div>
 	</div>
-</script>
-
-<script type="text/ng-template" id="/templates/property-editor-label.html">
-	<span class="label-text">
-		[[ label(k) ]]
-		<!--
-		<span class="glyphicon glyphicon-info-sign" title="[[ m(k).desc ]]" ng-show="m(k).desc" ng-click="showDesc[k] = !showDesc[k];"></span>
-		-->
-	</span>
 </script>

@@ -4,7 +4,7 @@
 	</div>
 	<div class="modal-body">
 		<p>What type of element would you like to add?</p>
-		<select ng-model="elementType" ng-options="type.code as type.label for type in elementTypes"></select>
+		<p><select ng-model="elementType" ng-options="type.code as type.label for type in elementTypes"></select></p>
 	</div>
 	<div class="modal-footer">
 		<button class="btn btn-primary" type="button" ng-click="add()">Add</button>

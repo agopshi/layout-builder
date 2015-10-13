@@ -2,7 +2,7 @@
 	var app = window.app,
 		module = app.modules.builder;
 
-	module.directive('appLayoutRow', [function() {
+	module.directive('appLayoutRow', ['$uibModal', function($uibModal) {
 		function createCol()
 		{
 			return {
@@ -32,8 +32,28 @@
 				$scope.row.cols.splice(idx, 1);
 			};
 
-			$scope.editElement = function() {
+			$scope.edit = function() {
+				var modal = $uibModal.open({
+					animation: false,
+					templateUrl: '/templates/builder/element_options.html',
+					controller: 'ElementOptionsController',
+					resolve: {
+						elem: function() {
+							// edit a copy of the element in case the user wants to cancel
+							return angular.copy($scope.row);
+						}
+					}
+				});
 
+				modal.result
+					.then(function(elem) {
+						// on success, copy over the updated values
+						$scope.row.type = elem.type;
+						$scope.row.data = elem.data;
+					})
+					.catch(function(reason) {
+						// element options dialog was canceled
+					});
 			};
 
 			$scope.colBps = app.COL_BPS;

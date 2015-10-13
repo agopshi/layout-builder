@@ -2,10 +2,16 @@
 	var app = window.app,
 		module = app.modules.builder;
 
-	function elementOptionsController($scope, $modalInstance)
+	function elementOptionsController($scope, $modalInstance, elem)
 	{
+		$scope.elementTypes = app.ELEMENT_TYPES;
+		
+		$scope.elem = elem;
+
+		$scope.elem.fields = {};
+
 		$scope.update = function() {
-			$modalInstance.close();
+			$modalInstance.close($scope.elem);
 		};
 
 		$scope.cancel = function() {
@@ -13,8 +19,10 @@
 		};
 	}
 
-	module.controller('ElementOptionsController', elementOptionsController, [
+	module.controller('ElementOptionsController', [
 		'$scope',
-		'$modalInstance'
+		'$modalInstance',
+		'elem',
+		elementOptionsController
 	]);
 })(angular);

@@ -79,10 +79,16 @@
 	var app = window.app,
 		module = app.modules.builder;
 
-	function elementOptionsController($scope, $modalInstance)
+	function elementOptionsController($scope, $modalInstance, elem)
 	{
+		$scope.elementTypes = app.ELEMENT_TYPES;
+		
+		$scope.elem = elem;
+
+		$scope.elem.fields = {};
+
 		$scope.update = function() {
-			$modalInstance.close();
+			$modalInstance.close($scope.elem);
 		};
 
 		$scope.cancel = function() {
@@ -90,9 +96,11 @@
 		};
 	}
 
-	module.controller('ElementOptionsController', elementOptionsController, [
+	module.controller('ElementOptionsController', [
 		'$scope',
-		'$modalInstance'
+		'$modalInstance',
+		'elem',
+		elementOptionsController
 	]);
 })(angular);
 
@@ -102,11 +110,7 @@
 
 	function elementPickerController($scope, $modalInstance)
 	{
-		/**
-		 * @todo Abstract out. Element types are provided via application.
-		 */
 		$scope.elementTypes = app.ELEMENT_TYPES;
-
 		$scope.elementType = 'row';
 
 		$scope.add = function() {
@@ -118,10 +122,54 @@
 		};
 	}
 
-	module.controller('ElementPickerController', elementPickerController, [
+	module.controller('ElementPickerController', [
 		'$scope',
-		'$modalInstance'
+		'$modalInstance',
+		elementPickerController	
 	]);
+})(angular);
+
+(function(angular) {
+	var app = window.app,
+		module = app.modules.builder;
+
+	/**
+	 * Property editor directive
+	 */
+	module.directive('appFields', [function() {
+		function controller($scope)
+		{
+		}
+
+		return {
+			templateUrl: '/builder/templates/fields.html',
+			scope: {
+				fields: '=appFields',
+				values: '='
+			},
+			controller: ['$scope', controller]
+		};
+	}]);
+
+	module.directive('appFieldsNested', ['$compile', function($compile) {
+		function link(scope, elem, attrs)
+		{
+			var html = '<div app-fields="fields" values="values"></div>';
+
+			// dynamically compile the HTML so that we don't put Angular into an infinite loop
+			$compile(html)(scope, function(innerElem, scope) {
+				elem.append(innerElem);
+			});
+		}
+
+		return {
+			link: link,
+			scope: {
+				fields: '=appFieldsNested',
+				values: '='
+			}
+		};
+	}]);
 })(angular);
 
 (function(angular) {
@@ -251,7 +299,7 @@
 	var app = window.app,
 		module = app.modules.builder;
 
-	module.directive('appLayoutRow', [function() {
+	module.directive('appLayoutRow', ['$uibModal', function($uibModal) {
 		function createCol()
 		{
 			return {
@@ -281,8 +329,28 @@
 				$scope.row.cols.splice(idx, 1);
 			};
 
-			$scope.editElement = function() {
+			$scope.edit = function() {
+				var modal = $uibModal.open({
+					animation: false,
+					templateUrl: '/templates/builder/element_options.html',
+					controller: 'ElementOptionsController',
+					resolve: {
+						elem: function() {
+							// edit a copy of the element in case the user wants to cancel
+							return angular.copy($scope.row);
+						}
+					}
+				});
 
+				modal.result
+					.then(function(elem) {
+						// on success, copy over the updated values
+						$scope.row.type = elem.type;
+						$scope.row.data = elem.data;
+					})
+					.catch(function(reason) {
+						// element options dialog was canceled
+					});
 			};
 
 			$scope.colBps = app.COL_BPS;

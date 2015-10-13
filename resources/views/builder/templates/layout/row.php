@@ -2,6 +2,7 @@
 	<div class="lb-meta">
 		<div class="lb-meta-left">
 			Element: {{row.type}}
+			<button ng-click="edit()">Edit</button>
 		</div>
 		<div class="lb-meta-right">
 			<button ng-click="remove()">-</button>
