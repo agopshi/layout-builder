@@ -2,36 +2,57 @@
 
 namespace LayoutBuilder;
 
-class ElementProvider
+require_once __DIR__ . '/Exception.php';
+
+class Element
 {
-	protected static $_elements = array();
+	protected $_code = '';
+	protected $_render = null;
+	protected $_fields = array();
 
-	public static function register($code, $render, $fields)
+	public function __construct($code, $render, $fields = null)
 	{
-		$element = new stdClass();
-		$element->render = $render;
-		$element->fields = $fields;
-
-		static::$_elements[$code] = $element;
-	}
-
-	public static function get($code)
-	{
-		if (!isset(static::$_elements[$code]))
+		if (!is_callable($render))
 		{
-			throw new \Exception('Element ' . $code . ' not registered!');
+			throw new InvalidArgumentException('$render must be callable!');
 		}
 
-		return static::$_elements[$code];
+		$this->_code = $code;
+		$this->_render = $render;
+		$this->_fields = $fields;
 	}
 
-	public static function render($code, $values)
+	public function render($values)
 	{
-		return static::get($code)->render($values);
+		return call_user_func_array($this->_render, array($values));
 	}
 
-	public static function fields($code)
+	public function getFields()
 	{
-		return static::get($code)->fields;
+		return $this->_fields;
+	}
+}
+
+class ElementProvider
+{
+	protected $_elements = array();
+
+	public function __construct()
+	{
+	}
+
+	public function register($code, $render, $fields = null)
+	{
+		$this->_elements[$code] = new Element($code, $render, $fields);
+	}
+
+	public function get($code)
+	{
+		if (!isset($this->_elements[$code]))
+		{
+			throw new Exception('Element ' . $code . ' not registered!');
+		}
+
+		return $this->_elements[$code];
 	}
 }

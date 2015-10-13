@@ -2,6 +2,10 @@
 
 namespace LayoutBuilder;
 
+require_once __DIR__ . '/config.php';
+
+require_once LB_LIB . 'Exception.php';
+
 function view($name, $args = array())
 {
 	$name = preg_replace('#[^a-zA-Z0-9_\-/]#', '', $name);
@@ -10,7 +14,7 @@ function view($name, $args = array())
 
 	if ($fileName === false)
 	{
-		throw new \Exception('Could not load view: ' . $name);
+		throw new Exception('Could not load view ' . $name . '!');
 	}
 
 	ob_start();

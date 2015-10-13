@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../app/init.php';
+require_once __DIR__ . '/inc/init.php';
 
 echo LayoutBuilder\view('header');
 
