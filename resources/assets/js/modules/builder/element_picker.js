@@ -7,16 +7,7 @@
 		/**
 		 * @todo Abstract out. Element types are provided via application.
 		 */
-		$scope.elementTypes = [
-			{
-				label: 'Row',
-				code: 'row'
-			},
-			{
-				label: 'Lorem',
-				code: 'lorem'
-			}
-		];
+		$scope.elementTypes = app.ELEMENT_TYPES;
 
 		$scope.elementType = 'row';
 

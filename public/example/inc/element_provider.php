@@ -17,9 +17,12 @@ $elementProvider->register('lorem', function() {
 $elementProvider->register('html', function($values) {
 	return $values->html;
 }, array(
-	'html' => array(
-		'type' => 'textarea',
-		'label' => 'HTML'
+	'label' => 'HTML',
+	'fields' => array(
+		'html' => array(
+			'type' => 'textarea',
+			'label' => 'HTML'
+		)
 	)
 ));
 

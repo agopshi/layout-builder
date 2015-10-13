@@ -7,7 +7,7 @@
 		{
 			$http({
 				method: 'POST',
-				url: app.routeUrl,
+				url: app.ROUTE_URL,
 				data: {
 					action: 'renderElement',
 					elementType: elem.type,

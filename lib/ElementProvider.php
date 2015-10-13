@@ -8,9 +8,9 @@ class Element
 {
 	protected $_code = '';
 	protected $_render = null;
-	protected $_fields = array();
+	protected $_extra = array();
 
-	public function __construct($code, $render, $fields = null)
+	public function __construct($code, $render, $extra = array())
 	{
 		if (!is_callable($render))
 		{
@@ -19,7 +19,7 @@ class Element
 
 		$this->_code = $code;
 		$this->_render = $render;
-		$this->_fields = $fields;
+		$this->_extra = $extra;
 	}
 
 	public function render($values)
@@ -29,7 +29,22 @@ class Element
 
 	public function getFields()
 	{
-		return $this->_fields;
+		if (isset($this->_extra['fields']))
+		{
+			return $this->_extra['fields'];
+		}
+
+		return array();
+	}
+
+	public function getLabel()
+	{
+		if (isset($this->_extra['label']))
+		{
+			return $this->_extra['label'];
+		}
+
+		return ucfirst($this->_code);
 	}
 }
 
@@ -41,9 +56,9 @@ class ElementProvider
 	{
 	}
 
-	public function register($code, $render, $fields = null)
+	public function register($code, $render, $extra = array())
 	{
-		$this->_elements[$code] = new Element($code, $render, $fields);
+		$this->_elements[$code] = new Element($code, $render, $extra);
 	}
 
 	public function get($code)

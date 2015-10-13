@@ -79,21 +79,33 @@
 	var app = window.app,
 		module = app.modules.builder;
 
+	function elementOptionsController($scope, $modalInstance)
+	{
+		$scope.update = function() {
+			$modalInstance.close();
+		};
+
+		$scope.cancel = function() {
+			$modalInstance.dismiss('cancel');
+		};
+	}
+
+	module.controller('ElementOptionsController', elementOptionsController, [
+		'$scope',
+		'$modalInstance'
+	]);
+})(angular);
+
+(function(angular) {
+	var app = window.app,
+		module = app.modules.builder;
+
 	function elementPickerController($scope, $modalInstance)
 	{
 		/**
 		 * @todo Abstract out. Element types are provided via application.
 		 */
-		$scope.elementTypes = [
-			{
-				label: 'Row',
-				code: 'row'
-			},
-			{
-				label: 'Lorem',
-				code: 'lorem'
-			}
-		];
+		$scope.elementTypes = app.ELEMENT_TYPES;
 
 		$scope.elementType = 'row';
 
@@ -204,7 +216,7 @@
 		{
 			$http({
 				method: 'POST',
-				url: app.routeUrl,
+				url: app.ROUTE_URL,
 				data: {
 					action: 'renderElement',
 					elementType: elem.type,
@@ -240,17 +252,17 @@
 		module = app.modules.builder;
 
 	module.directive('appLayoutRow', [function() {
+		function createCol()
+		{
+			return {
+				bp: 'sm',
+				size: 6,
+				rows: []
+			}
+		}
+
 		function controller($scope)
 		{
-			function createCol()
-			{
-				return {
-					bp: 'sm',
-					size: 6,
-					rows: []
-				}
-			}
-
 			$scope.addColumn = function(idx) {
 				var cols = $scope.row.cols,
 					col = createCol();
@@ -269,11 +281,12 @@
 				$scope.row.cols.splice(idx, 1);
 			};
 
-			/**
-			 * @todo Abstract these out. Grids should be configurable.
-			 */
-			$scope.colBps = ['xs', 'sm', 'md', 'lg'];
-			$scope.colSizes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+			$scope.editElement = function() {
+
+			};
+
+			$scope.colBps = app.COL_BPS;
+			$scope.colSizes = app.COL_SIZES;
 
 			$scope.colSortable = {
 				handle: '.lb-meta',
