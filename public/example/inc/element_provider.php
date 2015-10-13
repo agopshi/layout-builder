@@ -15,7 +15,9 @@ $elementProvider->register('lorem', function() {
 });
 
 $elementProvider->register('html', function($values) {
-	return $values->html;
+	return '<div>' .
+		(isset($values->html) ? $values->html : 'No HTML provided!') .
+	'</div>';
 }, array(
 	'label' => 'HTML',
 	'fields' => array(

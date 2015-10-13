@@ -1,3 +1,8 @@
+<?php
+$elementProvider = $args['elementProvider'];
+$elementTypesJson = $elementProvider->getTypesJson();
+?>
+
 <script>
 	window.app = {
 		modules: {},
@@ -10,16 +15,7 @@
 		COL_BPS: ['xs', 'sm', 'md', 'lg'],
 		COL_SIZES: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
 
-		ELEMENT_TYPES: [
-			{
-				label: 'Row',
-				code: 'row'
-			},
-			{
-				label: 'Lorem',
-				code: 'lorem'
-			}
-		]
+		ELEMENT_TYPES: <?php echo $elementTypesJson; ?>
 	};
 </script>
 

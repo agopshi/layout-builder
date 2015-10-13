@@ -11,4 +11,6 @@
 </div>
 
 <?php
-echo LayoutBuilder\view('builder/scripts');
+echo LayoutBuilder\view('builder/scripts', array(
+	'elementProvider' => $args['elementProvider']
+));

@@ -37,6 +37,11 @@ class Element
 		return array();
 	}
 
+	public function getCode()
+	{
+		return $this->_code;
+	}
+
 	public function getLabel()
 	{
 		if (isset($this->_extra['label']))
@@ -54,6 +59,9 @@ class ElementProvider
 
 	public function __construct()
 	{
+		$this->register('row', function() {
+			// rows are rendered manually, this only serves as a placeholder
+		});
 	}
 
 	public function register($code, $render, $extra = array())
@@ -69,5 +77,25 @@ class ElementProvider
 		}
 
 		return $this->_elements[$code];
+	}
+
+	public function getTypes()
+	{
+		$types = array();
+
+		foreach ($this->_elements as $element)
+		{
+			$types[] = array(
+				'code' => $element->getCode(),
+				'label' => $element->getLabel()
+			);
+		}
+
+		return $types;
+	}
+
+	public function getTypesJson()
+	{
+		return json_encode($this->getTypes());
 	}
 }
