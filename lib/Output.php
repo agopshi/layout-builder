@@ -15,13 +15,14 @@ class Output
 		$this->_elementProvider = $elementProvider;
 	}
 
-	public function render($state)
+	public function render($state, $language)
 	{
 		echo view('header');
 
 		echo view('output', array(
 			'elementProvider' => $this->_elementProvider,
-			'state' => $state
+			'state' => $state,
+			'language' => $language
 		));
 
 		echo view('footer');

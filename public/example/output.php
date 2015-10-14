@@ -11,4 +11,6 @@ $output = new LayoutBuilder\Output($elementProvider);
 
 $data = load();
 
-$output->render($data->state);
+$lang = isset($_GET['lang']) ? $_GET['lang'] : 'en';
+
+$output->render($data->state, $lang);

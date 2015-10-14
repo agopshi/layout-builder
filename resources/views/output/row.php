@@ -1,5 +1,6 @@
 <?php
 $elementProvider = $args['elementProvider'];
+$language = $args['language'];
 $row = $args['row'];
 ?>
 
@@ -9,13 +10,14 @@ $row = $args['row'];
 			<div class="col-<?php echo $col->bp;?>-<?php echo $col->size; ?>">
 				<?php
 				echo LayoutBuilder\view('output/layout', array(
-					'rows' => $col->rows,
-					'elementProvider' => $args['elementProvider']
+					'elementProvider' => $elementProvider,
+					'language' => $language,
+					'rows' => $col->rows
 				));
 				?>
 			</div>
 		<?php endforeach; ?>
 	</div>
 <?php else: ?>
-	<?php echo $elementProvider->get($row->type)->render($row->data->en); ?>
+	<?php echo $elementProvider->get($row->type)->render($row->data->{$language}); ?>
 <?php endif;
