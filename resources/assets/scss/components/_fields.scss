@@ -1,0 +1,40 @@
+.lb-fields {
+	display: table;
+	width: 100%;
+}
+
+.lb-field {
+	display: table-row;
+}
+
+.lb-field-label {
+	display: table-cell;
+	vertical-align: top;
+	width: 20%;
+	padding: 0.5em 1em 0.5em 0;
+}
+
+.lb-field-value {
+	display: table-cell;
+	vertical-align: top;
+	padding: 0.5em 0;
+}
+
+.lb-field-list {
+
+}
+
+.lb-field-list-item {
+	margin-top: 0.5em;
+
+	&:first-child {
+		margin-top: 0;
+	}
+}
+
+.lb-field-list-item-meta {
+	padding: 0.5em;
+	font-size: 0.8em;
+	background: #ddd;
+	@include cf;
+}

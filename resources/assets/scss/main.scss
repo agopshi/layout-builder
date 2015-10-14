@@ -5,11 +5,10 @@
 
 @import 'partials/mixins';
 
-/* foo */
+@import 'components/fields';
 
 .row {
 	margin: 0.5em 0;
-	//border: 2px dashed gray;
 }
 
 .col {
@@ -17,6 +16,7 @@
 }
 
 .lb-meta {
+	margin: 0.5em 0;
 	padding: 0.5em;
 	font-size: 0.8em;
 	background: #ddd;

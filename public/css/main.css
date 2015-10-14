@@ -5920,7 +5920,39 @@ button.close {
 /**
  * Micro clearfix
  */
-/* foo */
+.lb-fields {
+  display: table;
+  width: 100%; }
+
+.lb-field {
+  display: table-row; }
+
+.lb-field-label {
+  display: table-cell;
+  vertical-align: top;
+  width: 20%;
+  padding: 0.5em 1em 0.5em 0; }
+
+.lb-field-value {
+  display: table-cell;
+  vertical-align: top;
+  padding: 0.5em 0; }
+
+.lb-field-list-item {
+  margin-top: 0.5em; }
+  .lb-field-list-item:first-child {
+    margin-top: 0; }
+
+.lb-field-list-item-meta {
+  padding: 0.5em;
+  font-size: 0.8em;
+  background: #ddd; }
+  .lb-field-list-item-meta:before, .lb-field-list-item-meta:after {
+    content: ' ';
+    display: table; }
+  .lb-field-list-item-meta:after {
+    clear: both; }
+
 .row {
   margin: 0.5em 0; }
 
@@ -5928,6 +5960,7 @@ button.close {
   margin: 0.5em 0; }
 
 .lb-meta {
+  margin: 0.5em 0;
   padding: 0.5em;
   font-size: 0.8em;
   background: #ddd; }
