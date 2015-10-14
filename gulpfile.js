@@ -10,7 +10,7 @@ assets(assetsDir, publicDir, function() {
 	// delete initial JS modules
 	delete this.config.js.modules;
 
-	var modules = ['common', 'builder'],
+	var modules = ['builder'],
 		modulesObj = {
 			vendor: [
 				assetsDir + 'js/vendor/jquery-1.11.3.js',

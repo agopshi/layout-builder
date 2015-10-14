@@ -2,7 +2,7 @@
 	var app = window.app,
 		module = app.modules.builder;
 
-	module.directive('appLayout', [function() {
+	module.directive('lbLayout', [function() {
 		function controller($scope, $uibModal)
 		{
 			function createRow(type)
@@ -55,16 +55,16 @@
 		return {
 			templateUrl: '/builder/templates/layout.html',
 			scope: {
-				rows: '=appLayout'
+				rows: '=lbLayout'
 			},
 			controller: ['$scope', '$uibModal', controller]
 		};
 	}]);
 
-	module.directive('appLayoutNested', ['$compile', function($compile) {
+	module.directive('lbLayoutNested', ['$compile', function($compile) {
 		function link(scope, elem, attrs)
 		{
-			var html = '<div app-layout="rows"></div>';
+			var html = '<div lb-layout="rows"></div>';
 
 			// dynamically compile the HTML so that we don't put Angular into an infinite loop
 			$compile(html)(scope, function(innerElem, scope) {
@@ -75,7 +75,7 @@
 		return {
 			link: link,
 			scope: {
-				rows: '=appLayoutNested'
+				rows: '=lbLayoutNested'
 			}
 		};
 	}]);

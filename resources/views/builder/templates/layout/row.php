@@ -26,7 +26,7 @@
 						</div>
 					</div>
 
-					<div app-layout-nested="col.rows"></div>
+					<div lb-layout-nested="col.rows"></div>
 				</div>
 			</div>
 
@@ -36,7 +36,7 @@
 		</div>
 
 		<div ng-switch-default>
-			<div app-layout-element="row"></div>
+			<div lb-layout-element="row"></div>
 		</div>
 	</div>
 </script>

@@ -1,7 +1,6 @@
 (function(angular) {
 	var app = window.app,
-		module = app.modules.builder = angular.module('app.builder', [
-			'app.common',
+		module = app.modules.builder = angular.module('lb.builder', [
 			'ui.bootstrap',
 			'ui.sortable'
 		]);
@@ -19,7 +18,7 @@
 		config
 	]);
 
-	function mainController($scope, util)
+	function mainController($scope)
 	{
 		/**
 		 * $scope.state // state stack for undo/redo
@@ -56,7 +55,7 @@
 		$scope.state = $scope.states[0];
 
 		$scope.pushState = function() {
-			$scope.states.push(util.deepClone($scope.state));
+			$scope.states.push(angular.copy($scope.state));
 		};
 
 		$scope.popState = function() {
@@ -155,7 +154,7 @@
 	/**
 	 * Property editor directive
 	 */
-	module.directive('appFields', [function() {
+	module.directive('lbFields', [function() {
 		function controller($scope)
 		{
 			$scope.addItem = function(values, code) {
@@ -175,17 +174,17 @@
 		return {
 			templateUrl: '/builder/templates/fields.html',
 			scope: {
-				fields: '=appFields',
+				fields: '=lbFields',
 				values: '='
 			},
 			controller: ['$scope', controller]
 		};
 	}]);
 
-	module.directive('appFieldsNested', ['$compile', function($compile) {
+	module.directive('lbFieldsNested', ['$compile', function($compile) {
 		function link(scope, elem, attrs)
 		{
-			var html = '<div app-fields="fields" values="values"></div>';
+			var html = '<div lb-fields="fields" values="values"></div>';
 
 			// dynamically compile the HTML so that we don't put Angular into an infinite loop
 			$compile(html)(scope, function(innerElem, scope) {
@@ -196,7 +195,7 @@
 		return {
 			link: link,
 			scope: {
-				fields: '=appFieldsNested',
+				fields: '=lbFieldsNested',
 				values: '='
 			}
 		};
@@ -207,7 +206,7 @@
 	var app = window.app,
 		module = app.modules.builder;
 
-	module.directive('appLayout', [function() {
+	module.directive('lbLayout', [function() {
 		function controller($scope, $uibModal)
 		{
 			function createRow(type)
@@ -260,16 +259,16 @@
 		return {
 			templateUrl: '/builder/templates/layout.html',
 			scope: {
-				rows: '=appLayout'
+				rows: '=lbLayout'
 			},
 			controller: ['$scope', '$uibModal', controller]
 		};
 	}]);
 
-	module.directive('appLayoutNested', ['$compile', function($compile) {
+	module.directive('lbLayoutNested', ['$compile', function($compile) {
 		function link(scope, elem, attrs)
 		{
-			var html = '<div app-layout="rows"></div>';
+			var html = '<div lb-layout="rows"></div>';
 
 			// dynamically compile the HTML so that we don't put Angular into an infinite loop
 			$compile(html)(scope, function(innerElem, scope) {
@@ -280,7 +279,7 @@
 		return {
 			link: link,
 			scope: {
-				rows: '=appLayoutNested'
+				rows: '=lbLayoutNested'
 			}
 		};
 	}]);
@@ -290,7 +289,7 @@
 	var app = window.app,
 		module = app.modules.builder;
 
-	module.directive('appLayoutElement', ['$http', function($http) {
+	module.directive('lbLayoutElement', ['$http', function($http) {
 		function render(elem, domElem)
 		{
 			$http({
@@ -319,7 +318,7 @@
 
 		return {
 			scope: {
-				elem: '=appLayoutElement',
+				elem: '=lbLayoutElement',
 			},
 			link: link
 		};
@@ -330,7 +329,7 @@
 	var app = window.app,
 		module = app.modules.builder;
 
-	module.directive('appLayoutRow', ['$uibModal', function($uibModal) {
+	module.directive('lbLayoutRow', ['$uibModal', function($uibModal) {
 		function createCol()
 		{
 			return {
@@ -396,7 +395,7 @@
 		return {
 			templateUrl: '/builder/templates/row.html',
 			scope: {
-				row: '=appLayoutRow',
+				row: '=lbLayoutRow',
 				remove: '&'
 			},
 			controller: ['$scope', controller]

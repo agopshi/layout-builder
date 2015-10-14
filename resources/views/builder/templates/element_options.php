@@ -6,7 +6,7 @@
 		<p>Element type:</p>
 		<p><select ng-model="elem.type" ng-options="type.code as type.label for type in elementTypes"></select></p>
 
-		<div app-fields="elem.fields" values="elem.data"></div>
+		<div lb-fields="elem.fields" values="elem.data"></div>
 	</div>
 	<div class="modal-footer">
 		<button class="btn btn-primary" type="button" ng-click="update()">Update</button>

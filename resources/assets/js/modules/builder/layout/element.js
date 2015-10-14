@@ -2,7 +2,7 @@
 	var app = window.app,
 		module = app.modules.builder;
 
-	module.directive('appLayoutElement', ['$http', function($http) {
+	module.directive('lbLayoutElement', ['$http', function($http) {
 		function render(elem, domElem)
 		{
 			$http({
@@ -31,7 +31,7 @@
 
 		return {
 			scope: {
-				elem: '=appLayoutElement',
+				elem: '=lbLayoutElement',
 			},
 			link: link
 		};

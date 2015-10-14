@@ -2,7 +2,7 @@
 	var app = window.app,
 		module = app.modules.builder;
 
-	module.directive('appLayoutRow', ['$uibModal', function($uibModal) {
+	module.directive('lbLayoutRow', ['$uibModal', function($uibModal) {
 		function createCol()
 		{
 			return {
@@ -68,7 +68,7 @@
 		return {
 			templateUrl: '/builder/templates/row.html',
 			scope: {
-				row: '=appLayoutRow',
+				row: '=lbLayoutRow',
 				remove: '&'
 			},
 			controller: ['$scope', controller]

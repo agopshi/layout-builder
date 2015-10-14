@@ -1,7 +1,6 @@
 (function(angular) {
 	var app = window.app,
-		module = app.modules.builder = angular.module('app.builder', [
-			'app.common',
+		module = app.modules.builder = angular.module('lb.builder', [
 			'ui.bootstrap',
 			'ui.sortable'
 		]);
@@ -19,7 +18,7 @@
 		config
 	]);
 
-	function mainController($scope, util)
+	function mainController($scope)
 	{
 		/**
 		 * $scope.state // state stack for undo/redo
@@ -56,7 +55,7 @@
 		$scope.state = $scope.states[0];
 
 		$scope.pushState = function() {
-			$scope.states.push(util.deepClone($scope.state));
+			$scope.states.push(angular.copy($scope.state));
 		};
 
 		$scope.popState = function() {

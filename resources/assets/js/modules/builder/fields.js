@@ -5,7 +5,7 @@
 	/**
 	 * Property editor directive
 	 */
-	module.directive('appFields', [function() {
+	module.directive('lbFields', [function() {
 		function controller($scope)
 		{
 			$scope.addItem = function(values, code) {
@@ -25,17 +25,17 @@
 		return {
 			templateUrl: '/builder/templates/fields.html',
 			scope: {
-				fields: '=appFields',
+				fields: '=lbFields',
 				values: '='
 			},
 			controller: ['$scope', controller]
 		};
 	}]);
 
-	module.directive('appFieldsNested', ['$compile', function($compile) {
+	module.directive('lbFieldsNested', ['$compile', function($compile) {
 		function link(scope, elem, attrs)
 		{
-			var html = '<div app-fields="fields" values="values"></div>';
+			var html = '<div lb-fields="fields" values="values"></div>';
 
 			// dynamically compile the HTML so that we don't put Angular into an infinite loop
 			$compile(html)(scope, function(innerElem, scope) {
@@ -46,7 +46,7 @@
 		return {
 			link: link,
 			scope: {
-				fields: '=appFieldsNested',
+				fields: '=lbFieldsNested',
 				values: '='
 			}
 		};
