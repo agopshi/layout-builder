@@ -67,7 +67,8 @@ $elementProvider->register('list', function($values) {
 					'label' => 'Unordered',
 					'value' => 'unordered'
 				)
-			)
+			),
+			'default' => 'ordered'
 		),
 		array(
 			'label' => 'Items',

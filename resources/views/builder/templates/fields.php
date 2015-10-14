@@ -9,7 +9,10 @@
 				<textarea ng-model="values[field.code]"></textarea>
 			</div>
 			<div ng-switch-when="select">
-				<select ng-model="values[field.code]" ng-options="option.value as option.label for option in field.options"></select>
+				<select
+					ng-init="values[field.code] = values[field.code] || field.default"
+					ng-model="values[field.code]"
+					ng-options="option.value as option.label for option in field.options"></select>
 			</div>
 			<div ng-switch-when="list" class="lb-field-list">
 				<div ng-repeat="value in values[field.code]" class="lb-field-list-item">
