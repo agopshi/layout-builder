@@ -10,9 +10,9 @@
 	</div>
 
 	<div ng-switch="row.type">
-		<div ng-switch-when="row">
+		<div ng-switch-when="row" class="row">
 			<div ui-sortable="colSortable" ng-model="row.cols" class="lb-cols">
-				<div ng-repeat="col in row.cols" class="col col-{{col.bp}}-{{col.size}}">
+				<div ng-repeat="col in row.cols" class="lb-col col-{{col.bp}}-{{col.size}}">
 					<div class="lb-meta">
 						<div class="lb-meta-left">
 							<button ng-click="addColumn($index)">+</button>
@@ -30,7 +30,7 @@
 				</div>
 			</div>
 
-			<div class="col col-sm-6" ng-if="row.cols.length === 0">
+			<div class="lb-col col-sm-6" ng-if="row.cols.length === 0">
 				<div class="lb-addButton" ng-click="addColumn()" >Add Column</div>
 			</div>
 		</div>

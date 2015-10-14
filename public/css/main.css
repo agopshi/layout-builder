@@ -5953,10 +5953,8 @@ button.close {
   .lb-field-list-item-meta:after {
     clear: both; }
 
-.row {
-  margin: 0.5em 0; }
-
-.col {
+.lb-row,
+.lb-col {
   margin: 0.5em 0; }
 
 .lb-meta {
