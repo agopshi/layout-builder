@@ -3,10 +3,13 @@
 		<h3 class="modal-title">Element Options</h3>
 	</div>
 	<div class="modal-body">
-		<p>Element type:</p>
+		<p>Type:</p>
 		<p><select ng-model="elem.type" ng-options="type.code as type.label for type in elementTypes"></select></p>
 
-		<div lb-fields="elem.fields" values="elem.data"></div>
+		<p>Language:</p>
+		<p><select ng-model="language" ng-options="lang.code as lang.label for lang in languages"></select></p>
+
+		<div lb-fields="elem.fields" values="elem.data[language]"></div>
 	</div>
 	<div class="modal-footer">
 		<button class="btn btn-primary" type="button" ng-click="update()">Update</button>

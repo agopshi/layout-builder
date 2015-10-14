@@ -18,8 +18,20 @@
 		config
 	]);
 
-	function mainController($scope, $http)
+	function mainController($scope, $http, locale)
 	{
+		$scope.id = app.loadId || null;
+
+		$scope.languages = locale.getLanguages();
+		$scope.language = locale.getCurrentLanguage();
+
+		$scope.$watch('language', function(newValue, oldValue) {
+			if (newValue !== oldValue)
+			{
+				locale.setCurrentLanguage(newValue);
+			}
+		});
+
 		/**
 		 * $scope.state // state stack for undo/redo
 		 *   state 0
@@ -51,10 +63,7 @@
 				rows: []
 			}
 		];
-
 		$scope.state = $scope.states[0];
-
-		$scope.id = app.loadId || null;
 
 		$scope.pushState = function() {
 			$scope.states.push(angular.copy($scope.state));
@@ -88,6 +97,7 @@
 
 	module.controller('MainController', mainController, [
 		'$scope',
-		'$http'
+		'$http',
+		'locale'
 	]);
 })(angular);

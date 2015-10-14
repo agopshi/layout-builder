@@ -18,8 +18,20 @@
 		config
 	]);
 
-	function mainController($scope, $http)
+	function mainController($scope, $http, locale)
 	{
+		$scope.id = app.loadId || null;
+
+		$scope.languages = locale.getLanguages();
+		$scope.language = locale.getCurrentLanguage();
+
+		$scope.$watch('language', function(newValue, oldValue) {
+			if (newValue !== oldValue)
+			{
+				locale.setCurrentLanguage(newValue);
+			}
+		});
+
 		/**
 		 * $scope.state // state stack for undo/redo
 		 *   state 0
@@ -51,10 +63,7 @@
 				rows: []
 			}
 		];
-
 		$scope.state = $scope.states[0];
-
-		$scope.id = app.loadId || null;
 
 		$scope.pushState = function() {
 			$scope.states.push(angular.copy($scope.state));
@@ -88,7 +97,8 @@
 
 	module.controller('MainController', mainController, [
 		'$scope',
-		'$http'
+		'$http',
+		'locale'
 	]);
 })(angular);
 
@@ -96,10 +106,16 @@
 	var app = window.layoutBuilder,
 		module = app.modules.builder;
 
-	function elementOptionsController($scope, $http, $modalInstance, elem)
+	function elementOptionsController($scope, $http, $modalInstance, elem, locale)
 	{
-		$scope.elem = elem;
 		$scope.elementTypes = app.ELEMENT_TYPES;
+		$scope.elem = elem;
+
+		$scope.languages = locale.getLanguages();
+		$scope.language = locale.getCurrentLanguage();
+
+		// ensure that the element has a data object for each language
+		locale.prepareData(elem.data);
 
 		elem.fields = null;
 
@@ -136,6 +152,7 @@
 		'$http',
 		'$modalInstance',
 		'elem',
+		'locale',
 		elementOptionsController
 	]);
 })(angular);
@@ -307,8 +324,44 @@
 	var app = window.layoutBuilder,
 		module = app.modules.builder;
 
-	module.directive('lbLayoutElement', ['$http', function($http) {
-		function render(elem, domElem)
+	module.service('locale', ['$rootScope', function($rootScope) {
+		var languages = app.LANGUAGES,
+			currentLanguage = languages[0].code;
+
+		var locale = {
+			getCurrentLanguage: function() {
+				return currentLanguage;
+			},
+
+			setCurrentLanguage: function(lang) {
+				currentLanguage = lang;
+
+				$rootScope.$broadcast('setCurrentLanguage', currentLanguage);
+			},
+
+			getLanguages: function() {
+				return languages;
+			},
+
+			prepareData: function(data) {
+				for (var i = 0; i < languages.length; ++i)
+				{
+					var lang = languages[i].code;
+					data[lang] = data[lang] || {};
+				}
+			}
+		};
+
+		return locale;
+	}]);
+})(angular);
+
+(function(angular) {
+	var app = window.layoutBuilder,
+		module = app.modules.builder;
+
+	module.directive('lbLayoutElement', ['$http', 'locale', function($http, locale) {
+		function render(elem, domElem, lang)
 		{
 			$http({
 				method: 'POST',
@@ -316,7 +369,7 @@
 				data: {
 					action: 'renderElement',
 					elementType: elem.type,
-					elementData: elem.data
+					elementData: elem.data[lang]
 				}
 			}).then(function(resp) {
 				domElem.html(resp.data);
@@ -330,8 +383,13 @@
 			// render the element whenever its data changes
 			scope.$watch('elem', function(oldValue, newValue) {
 				// note that this will be called the first time without any changes
-				render(scope.elem, elem);
+				render(scope.elem, elem, locale.getCurrentLanguage());
 			}, true);
+
+			// render the element whenever the language is changed
+			scope.$on('setCurrentLanguage', function(evt, lang) {
+				render(scope.elem, elem, lang);	
+			});
 		}
 
 		return {

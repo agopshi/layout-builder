@@ -15,7 +15,21 @@ $elementTypesJson = $elementProvider->getTypesJson();
 		COL_BPS: ['xs', 'sm', 'md', 'lg'],
 		COL_SIZES: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
 
-		ELEMENT_TYPES: <?php echo $elementTypesJson; ?>
+		ELEMENT_TYPES: <?php echo $elementTypesJson; ?>,
+
+		/**
+		 * @todo Abstract these out somewhere
+		 */
+		LANGUAGES: [
+			{
+				label: 'English',
+				code: 'en'
+			},
+			{
+				label: 'Spanish',
+				code: 'es'
+			}
+		]
 	};
 </script>
 

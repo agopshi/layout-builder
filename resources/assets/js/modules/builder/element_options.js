@@ -2,10 +2,16 @@
 	var app = window.layoutBuilder,
 		module = app.modules.builder;
 
-	function elementOptionsController($scope, $http, $modalInstance, elem)
+	function elementOptionsController($scope, $http, $modalInstance, elem, locale)
 	{
-		$scope.elem = elem;
 		$scope.elementTypes = app.ELEMENT_TYPES;
+		$scope.elem = elem;
+
+		$scope.languages = locale.getLanguages();
+		$scope.language = locale.getCurrentLanguage();
+
+		// ensure that the element has a data object for each language
+		locale.prepareData(elem.data);
 
 		elem.fields = null;
 
@@ -42,6 +48,7 @@
 		'$http',
 		'$modalInstance',
 		'elem',
+		'locale',
 		elementOptionsController
 	]);
 })(angular);
