@@ -58,15 +58,17 @@
 		 *                     baz
 		 *                   
 		 */
-		$scope.states = [
-			{
-				rows: []
-			}
-		];
-		$scope.state = $scope.states[0];
+		var initialState = app.loadState || {
+			rows: []
+		};
+
+		// stack of states in newest to oldest order
+		$scope.states = [initialState];
+		$scope.state = initialState;
 
 		$scope.pushState = function() {
-			$scope.states.push(angular.copy($scope.state));
+			// push a copy of the current state one behind the current state
+			$scope.states.splice(1, 0, angular.copy($scope.state));
 		};
 
 		$scope.popState = function() {

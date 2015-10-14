@@ -1,6 +1,9 @@
 <?php
 $elementProvider = $args['elementProvider'];
 $elementTypesJson = $elementProvider->getTypesJson();
+
+$loadId = $args['id'];
+$loadState = $args['state'];
 ?>
 
 <script>
@@ -29,7 +32,10 @@ $elementTypesJson = $elementProvider->getTypesJson();
 				label: 'Spanish',
 				code: 'es'
 			}
-		]
+		],
+
+		loadId: <?php echo json_encode($loadId); ?>,
+		loadState: <?php echo json_encode($loadState); ?>
 	};
 </script>
 

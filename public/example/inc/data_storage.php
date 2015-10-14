@@ -4,6 +4,9 @@ require_once __DIR__ . '/init.php';
 
 require_once LB_LIB . 'DataStorage.php';
 
+/**
+ * Perform example data storage.
+ */
 class ExampleDataStorage extends LayoutBuilder\DataStorage
 {
 	public function store($id, $data)

@@ -15,12 +15,14 @@ class Builder
 		$this->_elementProvider = $elementProvider;
 	}
 
-	public function render()
+	public function render($id, $state)
 	{
 		echo view('header');
 
 		echo view('builder', array(
-			'elementProvider' => $this->_elementProvider
+			'elementProvider' => $this->_elementProvider,
+			'id' => $id,
+			'state' => $state
 		));
 
 		echo view('footer');
