@@ -6007,6 +6007,10 @@ button.close {
 .lb-col {
   margin: 0.5em 0; }
 
+.row {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em; }
+
 .lb-meta {
   margin: 0.5em 0;
   padding: 0.5em;
