@@ -1,5 +1,5 @@
 (function(angular) {
-	var app = window.app,
+	var app = window.layoutBuilder,
 		module = app.modules.builder;
 
 	function elementOptionsController($scope, $http, $modalInstance, elem)
@@ -24,7 +24,7 @@
 			}).then(function(resp) {
 				elem.fields = resp.data;
 			}).catch(function(error) {
-				// TODO
+				alert('Oops, failed to retrieve element fields! Please try again. Error: ' + error);
 			});
 		}
 

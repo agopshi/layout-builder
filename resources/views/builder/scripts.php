@@ -4,7 +4,7 @@ $elementTypesJson = $elementProvider->getTypesJson();
 ?>
 
 <script>
-	window.app = {
+	window.layoutBuilder = {
 		modules: {},
 
 		ROUTE_URL: '<?php echo LB_PUBLIC_URL; ?>example/route_handler.php',

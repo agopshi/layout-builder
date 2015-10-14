@@ -1,5 +1,5 @@
 (function(angular) {
-	var app = window.app,
+	var app = window.layoutBuilder,
 		module = app.modules.builder;
 
 	/**

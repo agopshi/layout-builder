@@ -1,5 +1,5 @@
 (function(angular) {
-	var app = window.app,
+	var app = window.layoutBuilder,
 		module = app.modules.builder = angular.module('lb.builder', [
 			'ui.bootstrap',
 			'ui.sortable'
@@ -18,7 +18,7 @@
 		config
 	]);
 
-	function mainController($scope)
+	function mainController($scope, $http)
 	{
 		/**
 		 * $scope.state // state stack for undo/redo
@@ -54,6 +54,8 @@
 
 		$scope.state = $scope.states[0];
 
+		$scope.id = app.loadId || null;
+
 		$scope.pushState = function() {
 			$scope.states.push(angular.copy($scope.state));
 		};
@@ -66,10 +68,26 @@
 			$scope.states.pop();
 			$scope.state = $scope.states[$scope.states.length - 1];
 		};
+
+		$scope.save = function() {
+			$http({
+				method: 'POST',
+				url: app.ROUTE_URL,
+				data: {
+					action: 'save',
+					id: $scope.id,
+					state: $scope.state
+				}
+			}).then(function(resp) {
+				$scope.id = resp.data.id;
+			}).catch(function(error) {
+				alert('Oops, something went wrong! Please try again. Error: ' + error);
+			});
+		};
 	}
 
 	module.controller('MainController', mainController, [
 		'$scope',
-		'util'
+		'$http'
 	]);
 })(angular);

@@ -1,5 +1,5 @@
 (function(angular) {
-	var app = window.app,
+	var app = window.layoutBuilder,
 		module = app.modules.builder = angular.module('lb.builder', [
 			'ui.bootstrap',
 			'ui.sortable'
@@ -18,7 +18,7 @@
 		config
 	]);
 
-	function mainController($scope)
+	function mainController($scope, $http)
 	{
 		/**
 		 * $scope.state // state stack for undo/redo
@@ -54,6 +54,8 @@
 
 		$scope.state = $scope.states[0];
 
+		$scope.id = app.loadId || null;
+
 		$scope.pushState = function() {
 			$scope.states.push(angular.copy($scope.state));
 		};
@@ -66,16 +68,32 @@
 			$scope.states.pop();
 			$scope.state = $scope.states[$scope.states.length - 1];
 		};
+
+		$scope.save = function() {
+			$http({
+				method: 'POST',
+				url: app.ROUTE_URL,
+				data: {
+					action: 'save',
+					id: $scope.id,
+					state: $scope.state
+				}
+			}).then(function(resp) {
+				$scope.id = resp.data.id;
+			}).catch(function(error) {
+				alert('Oops, something went wrong! Please try again. Error: ' + error);
+			});
+		};
 	}
 
 	module.controller('MainController', mainController, [
 		'$scope',
-		'util'
+		'$http'
 	]);
 })(angular);
 
 (function(angular) {
-	var app = window.app,
+	var app = window.layoutBuilder,
 		module = app.modules.builder;
 
 	function elementOptionsController($scope, $http, $modalInstance, elem)
@@ -100,7 +118,7 @@
 			}).then(function(resp) {
 				elem.fields = resp.data;
 			}).catch(function(error) {
-				// TODO
+				alert('Oops, failed to retrieve element fields! Please try again. Error: ' + error);
 			});
 		}
 
@@ -123,7 +141,7 @@
 })(angular);
 
 (function(angular) {
-	var app = window.app,
+	var app = window.layoutBuilder,
 		module = app.modules.builder;
 
 	function elementPickerController($scope, $modalInstance)
@@ -148,7 +166,7 @@
 })(angular);
 
 (function(angular) {
-	var app = window.app,
+	var app = window.layoutBuilder,
 		module = app.modules.builder;
 
 	/**
@@ -203,7 +221,7 @@
 })(angular);
 
 (function(angular) {
-	var app = window.app,
+	var app = window.layoutBuilder,
 		module = app.modules.builder;
 
 	module.directive('lbLayout', [function() {
@@ -286,7 +304,7 @@
 })(angular);
 
 (function(angular) {
-	var app = window.app,
+	var app = window.layoutBuilder,
 		module = app.modules.builder;
 
 	module.directive('lbLayoutElement', ['$http', function($http) {
@@ -303,7 +321,7 @@
 			}).then(function(resp) {
 				domElem.html(resp.data);
 			}).catch(function(error) {
-				// TODO
+				alert('Oops, failed to update element HTML! Please try again. Error: ' + error);
 			});
 		}
 
@@ -326,7 +344,7 @@
 })(angular);
 
 (function(angular) {
-	var app = window.app,
+	var app = window.layoutBuilder,
 		module = app.modules.builder;
 
 	module.directive('lbLayoutRow', ['$uibModal', function($uibModal) {

@@ -1,5 +1,5 @@
 (function(angular) {
-	var app = window.app,
+	var app = window.layoutBuilder,
 		module = app.modules.builder;
 
 	module.directive('lbLayoutElement', ['$http', function($http) {
@@ -16,7 +16,7 @@
 			}).then(function(resp) {
 				domElem.html(resp.data);
 			}).catch(function(error) {
-				// TODO
+				alert('Oops, failed to update element HTML! Please try again. Error: ' + error);
 			});
 		}
 

@@ -8,6 +8,7 @@ require_once __DIR__ . '/Output.php';
 class RouteHandler
 {
 	protected $_elementProvider;
+	protected $_dataStorage;
 
 	protected function _sanitizeIdentifier($str)
 	{
@@ -19,13 +20,14 @@ class RouteHandler
 		header('Content-Type', 'application/json');
 	}
 
-	public function __construct($elementProvider)
+	public function __construct($elementProvider, $dataStorage)
 	{
 		$this->_elementProvider = $elementProvider;
+		$this->_dataStorage = $dataStorage;
 	}
 
 	/**
-	 * Dispatches a Layout Builder route.
+	 * Dispatches a Layout Builder route. Expects input to be provided as JSON in the POST body.
 	 * @return void        
 	 */
 	public function dispatch()
@@ -55,6 +57,11 @@ class RouteHandler
 		$this->$method($data);
 	}
 
+	/**
+	 * Given an element type and element data, returns the rendered HTML for that element.
+	 * @param  object $data Request data (element type and data).
+	 * @return void       
+	 */
 	public function handle_renderElement($data)
 	{
 		if (empty($data->elementType))
@@ -71,6 +78,11 @@ class RouteHandler
 		echo $output->renderElement($elementType, $elementData);
 	}
 
+	/**
+	 * Given an element type, returns the fields definition for that element.
+	 * @param  object $data Request data (element type).
+	 * @return void       
+	 */
 	public function handle_getElementFields($data)
 	{
 		if (empty($data->elementType))
@@ -84,5 +96,29 @@ class RouteHandler
 
 		$fields = $this->_elementProvider->get($elementType)->getFields();
 		echo json_encode($fields);
+	}
+
+	/**
+	 * Given an identifier and a save state, stores that save state.
+	 * @param  object $data Request data (id and save state).
+	 * @return void       
+	 */
+	public function handle_save($data)
+	{
+		if (empty($data->state))
+		{
+			throw new RouteException('Save state not provided!');
+		}
+
+		$id = isset($data->id) ? $data->id : null;
+
+		$this->_prepareJsonOutput();
+
+		$newId = $this->_dataStorage->store($id, $data->state);
+		
+		echo json_encode(array(
+			'status' => 'success',
+			'id' => $newId
+		));
 	}
 }
