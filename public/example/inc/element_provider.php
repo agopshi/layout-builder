@@ -21,9 +21,65 @@ $elementProvider->register('html', function($values) {
 }, array(
 	'label' => 'HTML',
 	'fields' => array(
-		'html' => array(
-			'type' => 'textarea',
-			'label' => 'HTML'
+		array(
+			'label' => 'HTML',
+			'code' => 'html',
+			'type' => 'textarea'
+		),
+		array(
+			'label' => 'JavaScript',
+			'code' => 'js',
+			'type' => 'textarea'
+		),
+		array(
+			'label' => 'CSS',
+			'code' => 'css',
+			'type' => 'textarea'
+		)
+	)
+));
+
+$elementProvider->register('list', function($values) {
+	$listElem = isset($values->type) && $values->type === 'ordered' ? 'ol' : 'ul';
+	$html = '<' . $listElem . '>';
+	if (isset($values->items) && is_array($values->items))
+	{
+		foreach ($values->items as $item)
+		{
+			$html .= '<li>' . $item->text . '</li>';
+		}
+	}
+	$html .= '</' . $listElem . '>';
+	return $html;
+}, array(
+	'label' => 'List',
+	'fields' => array(
+		array(
+			'label' => 'Type',
+			'code' => 'type',
+			'type' => 'select',
+			'options' => array(
+				array(
+					'label' => 'Ordered',
+					'value' => 'ordered'
+				),
+				array(
+					'label' => 'Unordered',
+					'value' => 'unordered'
+				)
+			)
+		),
+		array(
+			'label' => 'Items',
+			'code' => 'items',
+			'type' => 'list',
+			'list' => array(
+				array(
+					'label' => 'Text',
+					'code' => 'text',
+					'type' => 'text'
+				)
+			)
 		)
 	)
 ));

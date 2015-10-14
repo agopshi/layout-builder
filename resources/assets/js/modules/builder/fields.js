@@ -8,6 +8,18 @@
 	module.directive('appFields', [function() {
 		function controller($scope)
 		{
+			$scope.addItem = function(values, code) {
+				// create the list of items if it doesn't already exist
+				var items = values[code] = values[code] || [];
+
+				// add an item
+				// note that we don't care about the item's properties, the field group will define them
+				items.push({});
+			};
+
+			$scope.removeItem = function(items, idx) {
+				items.splice(idx, 1);
+			};
 		}
 
 		return {

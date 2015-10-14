@@ -55,7 +55,23 @@ class RouteHandler
 		$this->$method($data);
 	}
 
-	public function handle_renderElement(&$data)
+	public function handle_renderElement($data)
+	{
+		if (empty($data->elementType))
+		{
+			throw new RouteException('Element type not provided!');
+		}
+
+		$elementType = $this->_sanitizeIdentifier($data->elementType);
+		$elementData = isset($data->elementData) ? $data->elementData : null;
+
+		$this->_prepareJsonOutput();
+
+		$output = new Output($this->_elementProvider);
+		echo $output->renderElement($elementType, $elementData);
+	}
+
+	public function handle_getElementFields($data)
 	{
 		if (empty($data->elementType))
 		{
@@ -64,12 +80,9 @@ class RouteHandler
 
 		$elementType = $this->_sanitizeIdentifier($data->elementType);
 
-		$elementData = isset($data->elementData) ? $data->elementData : null;
-
 		$this->_prepareJsonOutput();
 
-		$output = new Output($this->_elementProvider);
-
-		echo $output->renderElement($elementType, $elementData);
+		$fields = $this->_elementProvider->get($elementType)->getFields();
+		echo json_encode($fields);
 	}
 }

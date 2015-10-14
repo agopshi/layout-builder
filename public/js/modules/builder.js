@@ -79,16 +79,34 @@
 	var app = window.app,
 		module = app.modules.builder;
 
-	function elementOptionsController($scope, $modalInstance, elem)
+	function elementOptionsController($scope, $http, $modalInstance, elem)
 	{
-		$scope.elementTypes = app.ELEMENT_TYPES;
-		
 		$scope.elem = elem;
+		$scope.elementTypes = app.ELEMENT_TYPES;
 
-		$scope.elem.fields = {};
+		elem.fields = null;
+
+		// load the element fields at start and when its type changes
+		$scope.$watch('elem.type', loadFields);
+
+		function loadFields()
+		{
+			$http({
+				method: 'POST',
+				url: app.ROUTE_URL,
+				data: {
+					action: 'getElementFields',
+					elementType: elem.type
+				}
+			}).then(function(resp) {
+				elem.fields = resp.data;
+			}).catch(function(error) {
+				// TODO
+			});
+		}
 
 		$scope.update = function() {
-			$modalInstance.close($scope.elem);
+			$modalInstance.close(elem);
 		};
 
 		$scope.cancel = function() {
@@ -98,6 +116,7 @@
 
 	module.controller('ElementOptionsController', [
 		'$scope',
+		'$http',
 		'$modalInstance',
 		'elem',
 		elementOptionsController
@@ -139,6 +158,18 @@
 	module.directive('appFields', [function() {
 		function controller($scope)
 		{
+			$scope.addItem = function(values, code) {
+				// create the list of items if it doesn't already exist
+				var items = values[code] = values[code] || [];
+
+				// add an item
+				// note that we don't care about the item's properties, the field group will define them
+				items.push({});
+			};
+
+			$scope.removeItem = function(items, idx) {
+				items.splice(idx, 1);
+			};
 		}
 
 		return {
@@ -280,7 +311,7 @@
 		function link(scope, elem, attrs)
 		{
 			// render the element whenever its data changes
-			scope.$watch(scope.elem, function(oldValue, newValue) {
+			scope.$watch('elem', function(oldValue, newValue) {
 				// note that this will be called the first time without any changes
 				render(scope.elem, elem);
 			}, true);
