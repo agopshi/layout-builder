@@ -34,21 +34,21 @@
 
 		/**
 		 * $scope.state // state stack for undo/redo
-		 *   state 0
-		 *   state 1
+		 *   state 3
 		 *   state 2
-		 *   current state // data for current state
-		 *     rows // list of rows
-		 *       row 0
-		 *       row 1  <-----------------------------------------------------------------+
-		 *         cols // list of columns                                                |
-		 *           col 0                                                                |
-		 *           col 1                                                                |
-		 *             rows // list of rows OR elements in a column                       |
-		 *               elem 1                                                           |
-		 *               elem 2 // an element could also be a row, which would repeat  }--+
-		 *               elem 3
-		 *                 type
+		 *   state 1
+		 *   state 0 i.e. current state // data for current stat
+		 *     rows // list of rows OR elements
+		 *       row/elem 0
+		 *       row/elem 1  <-----------------------------------------------------------+
+		 *         cols // list of columns                                               |
+		 *           col 0                                                               |
+		 *           col 1                                                               |
+		 *             rows // list of rows OR elements in a column                      |
+		 *               row/elem 1                                                      |
+		 *               row/elem 2 // a row would have the same structure as above   >--+
+		 *               row/elem 3
+		 *                 type // "row" or "<element_type>", where <element_type> is the actual element type
 		 *                 data // data mapped by language
 		 *                   en
 		 *                   es
@@ -56,7 +56,7 @@
 		 *                     foo // data value in particular language
 		 *                     bar
 		 *                     baz
-		 *                   
+		 *                   ...
 		 */
 		var initialState = app.loadState || {
 			rows: []
