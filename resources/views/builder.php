@@ -1,10 +1,11 @@
 <div ng-app="lb.builder">
 	<?php
-	echo LayoutBuilder\view('builder/templates/fields');
-	echo LayoutBuilder\view('builder/templates/layout');
-	echo LayoutBuilder\view('builder/templates/layout/row');
-	echo LayoutBuilder\view('builder/templates/element_picker');
-	echo LayoutBuilder\view('builder/templates/element_options');
+	echo LayoutBuilder\view('templates/fields');
+	
+	echo LayoutBuilder\view('templates/builder/layout');
+	echo LayoutBuilder\view('templates/builder/layout/row');
+	echo LayoutBuilder\view('templates/builder/element_picker');
+	echo LayoutBuilder\view('templates/builder/element_options');
 
 	echo LayoutBuilder\view('builder/core');
 	?>

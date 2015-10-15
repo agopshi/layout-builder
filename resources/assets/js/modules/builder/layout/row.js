@@ -66,7 +66,7 @@
 		}
 
 		return {
-			templateUrl: '/builder/templates/row.html',
+			templateUrl: '/templates/builder/layout/row.html',
 			scope: {
 				row: '=lbLayoutRow',
 				remove: '&'

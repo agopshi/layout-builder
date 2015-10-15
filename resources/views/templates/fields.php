@@ -1,4 +1,4 @@
-<script type="text/ng-template" id="/builder/templates/fields.html">
+<script type="text/ng-template" id="/templates/fields.html">
 	<div class="lb-fields">
 		<div ng-repeat="field in fields" class="lb-field">
 			<div class="lb-field-label">{{field.label}}</div>

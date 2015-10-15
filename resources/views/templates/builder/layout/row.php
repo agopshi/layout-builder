@@ -1,4 +1,4 @@
-<script type="text/ng-template" id="/builder/templates/row.html">
+<script type="text/ng-template" id="/templates/builder/layout/row.html">
 	<div class="lb-meta">
 		<div class="lb-meta-left">
 			Element: {{row.type}}

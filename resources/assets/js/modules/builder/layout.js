@@ -53,7 +53,7 @@
 		}
 
 		return {
-			templateUrl: '/builder/templates/layout.html',
+			templateUrl: '/templates/builder/layout.html',
 			scope: {
 				rows: '=lbLayout'
 			},

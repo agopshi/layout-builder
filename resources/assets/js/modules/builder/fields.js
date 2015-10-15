@@ -23,7 +23,7 @@
 		}
 
 		return {
-			templateUrl: '/builder/templates/fields.html',
+			templateUrl: '/templates/fields.html',
 			scope: {
 				fields: '=lbFields',
 				values: '='
