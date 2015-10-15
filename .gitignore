@@ -1,5 +1,7 @@
 .sass-cache
 node_modules
 
+app/.env.php
+
 public/example/storage
 public/example/uploads
