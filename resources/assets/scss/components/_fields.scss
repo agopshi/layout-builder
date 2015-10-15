@@ -18,6 +18,18 @@
 	display: table-cell;
 	vertical-align: top;
 	padding: 0.5em 0;
+
+	input,
+	textarea {
+		display: block;
+		width: 100%;
+		box-sizing: border-box;
+		margin-top: 0.5em;
+
+		&:first-child {
+			margin-top: 0;
+		}
+	}
 }
 
 .lb-field-list {
@@ -37,4 +49,11 @@
 	font-size: 0.8em;
 	background: #ddd;
 	@include cf;
+}
+
+.lb-field-image {
+	img {
+		display: block;
+		max-width: 50%;
+	}
 }

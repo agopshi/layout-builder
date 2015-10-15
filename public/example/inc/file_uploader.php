@@ -19,7 +19,7 @@ class ExampleFileUploader extends LayoutBuilder\FileUploader
 
 		move_uploaded_file($tmpFileName, $dir . '/' . $fileName);
 
-		return LB_PUBLIC_URL . 'public/example/uploads/' . $fileName;
+		return LB_PUBLIC_URL . 'example/uploads/' . $fileName;
 	}
 }
 

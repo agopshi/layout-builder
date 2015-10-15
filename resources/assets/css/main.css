@@ -5987,6 +5987,15 @@ button.close {
   display: table-cell;
   vertical-align: top;
   padding: 0.5em 0; }
+  .lb-field-value input,
+  .lb-field-value textarea {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 0.5em; }
+    .lb-field-value input:first-child,
+    .lb-field-value textarea:first-child {
+      margin-top: 0; }
 
 .lb-field-list-item {
   margin-top: 0.5em; }
@@ -6003,9 +6012,16 @@ button.close {
   .lb-field-list-item-meta:after {
     clear: both; }
 
+.lb-field-image img {
+  display: block;
+  max-width: 50%; }
+
 .lb-row,
 .lb-col {
   margin: 0.5em 0; }
+  .lb-row img,
+  .lb-col img {
+    max-width: 100%; }
 
 .row {
   margin-top: 0.5em;

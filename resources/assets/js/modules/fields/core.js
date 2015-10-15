@@ -1,13 +1,21 @@
 (function(angular) {
-	var module = angular.module('lb.fields', [
-		'ui.sortable'
-	]);
+	var app = window.layoutBuilder,
+		module = app.modules.fields = angular.module('lb.fields', [
+			'ui.sortable'
+		]);
+
+	module.service('lb.fields.config', function() {
+		var config = {
+			uploadUrl: '/'
+		}
+		return config;
+	});
 
 	/**
 	 * Fields editor directive.
 	 */
-	module.directive('lbFields', [function() {
-		function controller($scope)
+	module.directive('lbFields', ['lb.fields.config', function(config) {
+		function controller($scope, $http)
 		{
 			$scope.addItem = function(values, code) {
 				// create the list of items if it doesn't already exist
@@ -21,6 +29,39 @@
 			$scope.removeItem = function(items, idx) {
 				items.splice(idx, 1);
 			};
+
+			$scope.upload = function(file, values, code) {
+				if (!file)
+				{
+					values[code] = '';
+					return;
+				}
+
+				$http({
+					method: 'POST',
+					url: config.uploadUrl,
+					data: {
+						action: 'upload',
+						file: file
+					},
+					headers: {
+						// delete the Content-Type header to force the browser to set it correctly
+						'Content-Type': undefined
+					},
+					transformRequest: function(data, headersGetter) {
+						var formData = new FormData();
+						angular.forEach(data, function(value, key) {
+							formData.append(key, value);
+						});
+
+						return formData;
+					}
+				}).then(function(resp) {
+					values[code] = resp.data.url;
+				}).catch(function(error) {
+					alert('Oops, something went wrong! Please try again. Error: ' + error);
+				})
+			};
 		}
 
 		return {
@@ -29,7 +70,7 @@
 				fields: '=lbFields',
 				values: '='
 			},
-			controller: ['$scope', controller]
+			controller: ['$scope', '$http', controller]
 		};
 	}]);
 
@@ -54,5 +95,36 @@
 				values: '='
 			}
 		};
+	}]);
+
+	module.directive('lbFieldsUpload', [function() {
+		function link(scope, elem, attrs)
+		{
+			elem.bind('change', function(evt) {
+				scope.$apply(function() {
+					var files = evt.target.files;
+
+					if (files && files.length === 1)
+					{
+						scope.upload({
+							file: files[0]
+						});
+					}
+					else
+					{
+						scope.upload({
+							file: undefined
+						});
+					}
+				});
+			});
+		}
+
+		return {
+			link: link,
+			scope: {
+				upload: '&lbFieldsUpload'
+			}
+		}
 	}]);
 })(angular);

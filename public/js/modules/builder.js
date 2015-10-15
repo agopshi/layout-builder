@@ -6,6 +6,10 @@
 			'lb.fields'
 		]);
 
+	module.run(['lb.fields.config', function(lbFieldsConfig) {
+		lbFieldsConfig.uploadUrl = app.ROUTE_URL;
+	}]);
+
 	function mainController($scope, $http, locale)
 	{
 		$scope.id = app.loadId || null;

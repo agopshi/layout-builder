@@ -27,6 +27,11 @@
 					</div>
 					<div class="lb-field-list-add"><button ng-click="addItem(values, field.code)">Add Item</button></div>
 				</div>
+				<div ng-switch-when="image" class="lb-field-image">
+					<img ng-src="{{values[field.code]}}" ng-if="values[field.code]" />
+					<input ng-model="values[field.code]" type="text" />
+					<input lb-fields-upload="upload(file, values, field.code)" type="file" />
+				</div>
 			</div>
 		</div>
 	</div>

@@ -21,27 +21,11 @@ class RouteHandler
 		header('Content-Type', 'application/json');
 	}
 
-	public function __construct($elementProvider, $dataStorage)
+	protected function _dispatch($data)
 	{
-		$this->_elementProvider = $elementProvider;
-		$this->_dataStorage = $dataStorage;
-	}
-
-	/**
-	 * Dispatches a Layout Builder route. Expects input to be provided as JSON in the POST body.
-	 * @return void        
-	 */
-	public function dispatch()
-	{
-		/**
-		 * @todo Handle non-JSON request data
-		 */
-		$dataStr = file_get_contents('php://input');
-		$data = json_decode($dataStr, false);
-
 		if ($data === false || !is_object($data))
 		{
-			throw new RouteException('Route data not properly formatted JSON!');
+			throw new RouteException('Route data not properly formatted!');
 		}
 
 		if (empty($data->action))
@@ -59,6 +43,56 @@ class RouteHandler
 		}
 
 		$this->$method($data);
+	}
+
+	public function __construct($elementProvider, $dataStorage, $fileUploader)
+	{
+		$this->_elementProvider = $elementProvider;
+		$this->_dataStorage = $dataStorage;
+		$this->_fileUploader = $fileUploader;
+	}
+
+	/**
+	 * Dispatches a Layout Builder route. Expects input to be provided as JSON in the POST body.
+	 * @return void        
+	 */
+	public function dispatch()
+	{
+		try
+		{
+			$data = (object)$_POST;
+
+			if (isset($_SERVER['CONTENT_TYPE']))
+			{
+				$handlers = array(
+					'application/json' => function() {
+						$json = file_get_contents('php://input');
+						return json_decode($json, false);
+					}
+				);
+				
+				foreach ($handlers as $contentType => $handler)
+				{
+					// note that we use strpos() to check if the content type is contained within the header
+					// this succeeds in scenarios like Content-Type: application/json;charset=UTF-8
+					if (strpos($_SERVER['CONTENT_TYPE'], $contentType) !== false)
+					{
+						$data = $handler();
+					}
+				}
+			}
+
+			$this->_dispatch($data);
+		}
+		catch (Exception $e)
+		{
+			$this->_prepareJsonOutput();
+
+			echo json_encode(array(
+				'status' => 'error',
+				'error' => $e->getMessage()
+			));
+		}
 	}
 
 	/**
@@ -128,9 +162,11 @@ class RouteHandler
 
 	public function handle_upload($data)
 	{
-		/**
-		 * @todo Error checking, etc.
-		 */
+		if (empty($_FILES['file']))
+		{
+			throw new RouteException('File to upload not provided!');
+		}
+
 		$info = $_FILES['file'];
 
 		// break down file name
@@ -143,7 +179,7 @@ class RouteHandler
 		$extension = $this->_sanitizeIdentifier($extension);
 
 		// reconstruct file name
-		$fileName = $fileName . $extension;
+		$fileName = $fileName . '.' . $extension;
 
 		$url = $this->_fileUploader->upload(array(
 			'fileName' => $fileName,

@@ -39,6 +39,33 @@ $elementProvider->register('html', function($values) {
 	)
 ));
 
+$elementProvider->register('image', function($values) {
+	return '<img' .
+		' src="' . (isset($values->src) ? $values->src : '') . '"' .
+		' alt="' . (isset($values->alt) ? $values->alt : '') . '"' .
+		' title="' . (isset($values->title) ? $values->title : '') . '"' .
+		'/>';
+}, array(
+	'label' => 'Image',
+	'fields' => array(
+		array(
+			'label' => 'Source',
+			'code' => 'src',
+			'type' => 'image'
+		),
+		array(
+			'label' => 'Alt',
+			'code' => 'alt',
+			'type' => 'text'
+		),
+		array(
+			'label' => 'Title',
+			'code' => 'title',
+			'type' => 'text'
+		)
+	)
+));
+
 $elementProvider->register('list', function($values) {
 	$listElem = isset($values->type) && $values->type === 'ordered' ? 'ol' : 'ul';
 	$html = '<' . $listElem . '>';
