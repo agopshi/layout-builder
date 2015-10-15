@@ -147,7 +147,7 @@ class RouteHandler
 
 		$url = $this->_fileUploader->upload(array(
 			'fileName' => $fileName,
-			'tmpFileName' => $info['tmp_name'];
+			'tmpFileName' => $info['tmp_name']
 		));
 
 		$this->_prepareJsonOutput();
