@@ -9,10 +9,11 @@ class RouteHandler
 {
 	protected $_elementProvider;
 	protected $_dataStorage;
+	protected $_fileUploader;
 
 	protected function _sanitizeIdentifier($str)
 	{
-		return preg_replace('#[^a-zA-Z_\-]#', '', $str);
+		return preg_replace('#[^a-zA-Z0-9_\-]#', '', $str);
 	}
 
 	protected function _prepareJsonOutput()
@@ -32,6 +33,9 @@ class RouteHandler
 	 */
 	public function dispatch()
 	{
+		/**
+		 * @todo Handle non-JSON request data
+		 */
 		$dataStr = file_get_contents('php://input');
 		$data = json_decode($dataStr, false);
 
@@ -119,6 +123,38 @@ class RouteHandler
 		echo json_encode(array(
 			'status' => 'success',
 			'id' => $newId
+		));
+	}
+
+	public function handle_upload($data)
+	{
+		/**
+		 * @todo Error checking, etc.
+		 */
+		$info = $_FILES['file'];
+
+		// break down file name
+		$pathInfo = pathinfo($info['name']);
+		$fileName = $pathInfo['filename'];
+		$extension = $pathInfo['extension'];
+
+		// sanitize
+		$fileName = $this->_sanitizeIdentifier($fileName);
+		$extension = $this->_sanitizeIdentifier($extension);
+
+		// reconstruct file name
+		$fileName = $fileName . $extension;
+
+		$url = $this->_fileUploader->upload(array(
+			'fileName' => $fileName,
+			'tmpFileName' => $info['tmp_name'];
+		));
+
+		$this->_prepareJsonOutput();
+
+		echo json_encode(array(
+			'status' => 'success',
+			'url' => $url
 		));
 	}
 }
