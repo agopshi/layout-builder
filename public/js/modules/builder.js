@@ -2,21 +2,9 @@
 	var app = window.layoutBuilder,
 		module = app.modules.builder = angular.module('lb.builder', [
 			'ui.bootstrap',
-			'ui.sortable'
+			'ui.sortable',
+			'lb.fields'
 		]);
-
-	function config($httpProvider)
-	{
-		var headers = $httpProvider.defaults.headers;
-
-		// send AJAX indicator
-		headers.common['X-Requested-With'] = 'XMLHttpRequest';
-	}
-
-	module.config([
-		'$httpProvider',
-		config
-	]);
 
 	function mainController($scope, $http, locale)
 	{
@@ -182,61 +170,6 @@
 		'$modalInstance',
 		elementPickerController	
 	]);
-})(angular);
-
-(function(angular) {
-	var app = window.layoutBuilder,
-		module = app.modules.builder;
-
-	/**
-	 * Property editor directive
-	 */
-	module.directive('lbFields', [function() {
-		function controller($scope)
-		{
-			$scope.addItem = function(values, code) {
-				// create the list of items if it doesn't already exist
-				var items = values[code] = values[code] || [];
-
-				// add an item
-				// note that we don't care about the item's properties, the field group will define them
-				items.push({});
-			};
-
-			$scope.removeItem = function(items, idx) {
-				items.splice(idx, 1);
-			};
-		}
-
-		return {
-			templateUrl: '/templates/fields.html',
-			scope: {
-				fields: '=lbFields',
-				values: '='
-			},
-			controller: ['$scope', controller]
-		};
-	}]);
-
-	module.directive('lbFieldsNested', ['$compile', function($compile) {
-		function link(scope, elem, attrs)
-		{
-			var html = '<div lb-fields="fields" values="values"></div>';
-
-			// dynamically compile the HTML so that we don't put Angular into an infinite loop
-			$compile(html)(scope, function(innerElem, scope) {
-				elem.append(innerElem);
-			});
-		}
-
-		return {
-			link: link,
-			scope: {
-				fields: '=lbFieldsNested',
-				values: '='
-			}
-		};
-	}]);
 })(angular);
 
 (function(angular) {

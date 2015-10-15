@@ -40,4 +40,5 @@ $loadState = $args['state'];
 </script>
 
 <script src="<?php echo LB_PUBLIC_URL; ?>js/vendor.js"></script>
+<script src="<?php echo LB_PUBLIC_URL; ?>js/modules/fields.js"></script>
 <script src="<?php echo LB_PUBLIC_URL; ?>js/modules/builder.js"></script>

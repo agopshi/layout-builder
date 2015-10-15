@@ -2,21 +2,9 @@
 	var app = window.layoutBuilder,
 		module = app.modules.builder = angular.module('lb.builder', [
 			'ui.bootstrap',
-			'ui.sortable'
+			'ui.sortable',
+			'lb.fields'
 		]);
-
-	function config($httpProvider)
-	{
-		var headers = $httpProvider.defaults.headers;
-
-		// send AJAX indicator
-		headers.common['X-Requested-With'] = 'XMLHttpRequest';
-	}
-
-	module.config([
-		'$httpProvider',
-		config
-	]);
 
 	function mainController($scope, $http, locale)
 	{

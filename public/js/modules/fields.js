@@ -1,9 +1,10 @@
 (function(angular) {
-	var app = window.layoutBuilder,
-		module = app.modules.builder;
+	var module = angular.module('lb.fields', [
+		'ui.sortable'
+	]);
 
 	/**
-	 * Property editor directive
+	 * Fields editor directive.
 	 */
 	module.directive('lbFields', [function() {
 		function controller($scope)
@@ -32,6 +33,9 @@
 		};
 	}]);
 
+	/**
+	 * Nested fields editor directive. Used to avoid infinite loops within Angular's template system.
+	 */
 	module.directive('lbFieldsNested', ['$compile', function($compile) {
 		function link(scope, elem, attrs)
 		{
