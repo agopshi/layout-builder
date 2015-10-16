@@ -1,4 +1,5 @@
 <?php
+$config = $args['config'];
 $elementProvider = $args['elementProvider'];
 $elementTypesJson = $elementProvider->getTypesJson();
 
@@ -10,7 +11,7 @@ $loadState = $args['state'];
 	window.layoutBuilder = {
 		modules: {},
 
-		ROUTE_URL: '<?php echo LB_PUBLIC_URL; ?>example/route_handler.php',
+		ROUTE_URL: '<?php echo $config->getRouteHandlerUrl(); ?>',
 
 		/**
 		 * @todo Abstract these out somewhere
@@ -39,6 +40,6 @@ $loadState = $args['state'];
 	};
 </script>
 
-<script src="<?php echo LB_PUBLIC_URL; ?>js/vendor.js"></script>
-<script src="<?php echo LB_PUBLIC_URL; ?>js/modules/fields.js"></script>
-<script src="<?php echo LB_PUBLIC_URL; ?>js/modules/builder.js"></script>
+<script src="<?php echo $config->getPublicUrl('js/vendor.js'); ?>"></script>
+<script src="<?php echo $config->getPublicUrl('js/modules/fields.js'); ?>"></script>
+<script src="<?php echo $config->getPublicUrl('js/modules/builder.js'); ?>"></script>

@@ -1351,10 +1351,6 @@ pre {
 .lb-cols:after {
   clear: both; }
 
-.row {
-  margin-top: 0.5em;
-  margin-bottom: 0.5em; }
-
 .lb-meta {
   margin: 0.5em 0;
   padding: 0.5em;
@@ -1365,6 +1361,10 @@ pre {
     display: table; }
   .lb-meta:after {
     clear: both; }
+  .lb-meta input,
+  .lb-meta select {
+    width: auto;
+    padding: 0; }
 
 .lb-meta-left {
   float: left; }

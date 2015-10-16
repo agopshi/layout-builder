@@ -13,6 +13,7 @@
 
 <?php
 echo LayoutBuilder\view('builder/scripts', array(
+	'config' => $args['config'],
 	'elementProvider' => $args['elementProvider'],
 	'id' => $args['id'],
 	'state' => $args['state']
