@@ -1338,6 +1338,12 @@ pre {
   display: block;
   max-width: 50%; }
 
+.lb-builder input,
+.lb-builder textarea,
+.lb-builder select {
+  width: auto;
+  padding: 0; }
+
 .lb-row,
 .lb-col {
   margin: 0.5em 0; }
@@ -1361,10 +1367,6 @@ pre {
     display: table; }
   .lb-meta:after {
     clear: both; }
-  .lb-meta input,
-  .lb-meta select {
-    width: auto;
-    padding: 0; }
 
 .lb-meta-left {
   float: left; }

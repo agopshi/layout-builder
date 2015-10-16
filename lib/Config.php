@@ -6,6 +6,8 @@ class Config
 {
 	protected $_baseUrl;
 	protected $_routeHandlerUrl;
+	protected $_styles = array();
+	protected $_scripts = array();
 
 	public function __construct()
 	{
@@ -35,5 +37,25 @@ class Config
 	public function getRouteHandlerUrl()
 	{
 		return $this->_routeHandlerUrl;
+	}
+
+	public function addStyle($style)
+	{
+		$this->_styles[] = $style;
+	}
+
+	public function addScript($script)
+	{
+		$this->_scripts[] = $script;
+	}
+
+	public function getStyles()
+	{
+		return $this->_styles;
+	}
+
+	public function getScripts()
+	{
+		return $this->_scripts;
 	}
 }

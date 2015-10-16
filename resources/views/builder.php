@@ -1,4 +1,4 @@
-<div ng-app="lb.builder">
+<div ng-app="lb.builder" class="lb-builder">
 	<?php
 	echo LayoutBuilder\view('templates/fields');
 	
