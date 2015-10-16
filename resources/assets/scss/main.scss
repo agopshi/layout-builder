@@ -1,7 +1,5 @@
-//@import 'vendor/normalize';
-@import 'vendor/jquery-ui.structure';
-//@import 'vendor/skeleton';
 @import 'vendor/bootstrap';
+@import 'vendor/jquery-ui.structure';
 
 @import 'partials/mixins';
 
@@ -14,6 +12,10 @@
 	img {
 		max-width: 100%;
 	}
+}
+
+.lb-cols {
+	@include clearfix;
 }
 
 // for demo purposes
