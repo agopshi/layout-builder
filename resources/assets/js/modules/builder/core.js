@@ -12,7 +12,7 @@
 
 	function mainController($scope, $http, locale)
 	{
-		$scope.id = app.loadId || null;
+		$scope.id = app.loadId;
 
 		$scope.languages = locale.getLanguages();
 		$scope.language = locale.getCurrentLanguage();
