@@ -1,13 +1,12 @@
 <div ng-controller="MainController" class="container-fluid">
-	<p>
-		Actions:
-		<button ng-click="save()">Save</button>
-	</p>
+	<div lb-fields="metaFields" values="meta"></div>
 
 	<p>
-		Language:
-		<select ng-model="language" ng-options="lang.code as lang.label for lang in languages"></select>
+		<button ng-click="save()" ng-hide="saving">Save</button>
+		<span ng-show="saving">Saving&hellip;</span>
 	</p>
+
+	<p>Language: <select ng-model="language" ng-options="lang.code as lang.label for lang in languages"></select></p>
 
 	<div lb-layout="state.rows"></div>
 

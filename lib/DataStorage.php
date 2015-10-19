@@ -8,5 +8,5 @@ abstract class DataStorage
 	{
 	}
 
-	abstract public function store($id, $data);
+	abstract public function store($data);
 }

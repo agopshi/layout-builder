@@ -16,5 +16,7 @@ echo LayoutBuilder\view('builder/scripts', array(
 	'config' => $args['config'],
 	'elementProvider' => $args['elementProvider'],
 	'id' => $args['id'],
+	'meta' => $args['meta'],
+	'metaFields' => $args['metaFields'],
 	'state' => $args['state']
 ));

@@ -148,11 +148,9 @@ class RouteHandler
 			throw new RouteException('Save state not provided!');
 		}
 
-		$id = isset($data->id) ? $data->id : null;
-
 		$this->_prepareJsonOutput();
 
-		$newId = $this->_dataStorage->store($id, $data->state);
+		$newId = $this->_dataStorage->store($data);
 		
 		echo json_encode(array(
 			'status' => 'success',

@@ -17,7 +17,7 @@ class Builder
 		$this->_elementProvider = $elementProvider;
 	}
 
-	public function render($id, $state)
+	public function render($id, $meta, $metaFields, $state)
 	{
 		echo view('header', array(
 			'config' => $this->_config
@@ -27,6 +27,8 @@ class Builder
 			'config' => $this->_config,
 			'elementProvider' => $this->_elementProvider,
 			'id' => $id,
+			'meta' => $meta,
+			'metaFields' => $metaFields,
 			'state' => $state
 		));
 

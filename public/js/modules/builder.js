@@ -12,7 +12,9 @@
 
 	function mainController($scope, $http, locale)
 	{
-		$scope.id = app.loadId;
+		$scope.id = app.load.id;
+		$scope.meta = app.load.meta || {};
+		$scope.metaFields = app.load.metaFields || [];
 
 		$scope.languages = locale.getLanguages();
 		$scope.language = locale.getCurrentLanguage();
@@ -50,9 +52,16 @@
 		 *                     baz
 		 *                   ...
 		 */
-		var initialState = app.loadState || {
-			rows: []
-		};
+		var initialState = app.load.state;
+
+		if (!initialState ||
+			typeof initialState !== 'object' ||
+			Object.prototype.toString.call(initialState.rows) !== '[object Array]')
+		{
+			initialState = {
+				rows: []
+			};
+		}
 
 		// stack of states in newest to oldest order
 		$scope.states = [initialState];
@@ -73,18 +82,23 @@
 		};
 
 		$scope.save = function() {
+			$scope.saving = true;
+
 			$http({
 				method: 'POST',
 				url: app.ROUTE_URL,
 				data: {
 					action: 'save',
 					id: $scope.id,
+					meta: $scope.meta,
 					state: $scope.state
 				}
 			}).then(function(resp) {
 				$scope.id = resp.data.id;
 			}).catch(function(error) {
 				alert('Oops, something went wrong! Please try again. Error: ' + error);
+			}).finally(function() {
+				$scope.saving = false;
 			});
 		};
 	}

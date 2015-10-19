@@ -3,8 +3,10 @@ $config = $args['config'];
 $elementProvider = $args['elementProvider'];
 $elementTypesJson = $elementProvider->getTypesJson();
 
-$loadId = $args['id'];
-$loadState = $args['state'];
+$id = $args['id'];
+$meta = $args['meta'];
+$metaFields = $args['metaFields'];
+$state = $args['state'];
 ?>
 
 <script>
@@ -35,8 +37,12 @@ $loadState = $args['state'];
 			}
 		],
 
-		loadId: <?php echo json_encode($loadId); ?>,
-		loadState: <?php echo json_encode($loadState); ?>
+		load: {
+			id: <?php echo json_encode($id); ?>,
+			meta: <?php echo json_encode($meta); ?>,
+			metaFields: <?php echo json_encode($metaFields); ?>,
+			state: <?php echo json_encode($state); ?>
+		}
 	};
 </script>
 
