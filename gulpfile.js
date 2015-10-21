@@ -33,7 +33,7 @@ assets(assetsDir, publicDir, function() {
 		}
 	});
 
-	delete this.tasks.sass;
+	/*delete this.tasks.sass;
 
 	// use gulp-ruby-sass instead
 	this.tasks.rubySass = function() {
@@ -55,5 +55,5 @@ assets(assetsDir, publicDir, function() {
 			watch: config.sass.src,
 			task: 'ruby-sass'
 		});
-	};
+	};*/
 }, gulp);

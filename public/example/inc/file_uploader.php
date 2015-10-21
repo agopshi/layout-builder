@@ -1,7 +1,6 @@
 <?php
 
 require_once __DIR__ . '/init.php';
-
 require_once LB_LIB . 'FileUploader.php';
 
 /**
@@ -9,6 +8,14 @@ require_once LB_LIB . 'FileUploader.php';
  */
 class ExampleFileUploader extends LayoutBuilder\FileUploader
 {
+	protected $_config;
+
+	public function __construct($config)
+	{
+		parent::__construct();
+		$this->_config = $config;
+	}
+
 	public function upload($info)
 	{
 		$dir = LB_ROOT . 'public/example/uploads';
@@ -19,8 +26,6 @@ class ExampleFileUploader extends LayoutBuilder\FileUploader
 
 		move_uploaded_file($tmpFileName, $dir . '/' . $fileName);
 
-		return LB_PUBLIC_URL . 'example/uploads/' . $fileName;
+		return $this->_config->getPublicUrl('example/uploads/' . $fileName);
 	}
 }
-
-return new ExampleFileUploader();

@@ -17,15 +17,11 @@ class Output
 
 	public function render($state, $language)
 	{
-		echo view('header');
-
 		echo view('output', array(
 			'elementProvider' => $this->_elementProvider,
 			'state' => $state,
 			'language' => $language
 		));
-
-		echo view('footer');
 	}
 
 	public function renderElement($type, $data = null)

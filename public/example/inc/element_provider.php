@@ -1,7 +1,6 @@
 <?php
 
 require_once __DIR__ . '/init.php';
-
 require_once LB_LIB . 'ElementProvider.php';
 require_once LB_LIB . 'RouteHandler.php';
 

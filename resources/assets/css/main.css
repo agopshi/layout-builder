@@ -123,8 +123,7 @@ select {
   text-transform: none; }
 
 button,
-html input[type="button"],
-input[type="reset"],
+html input[type="button"], input[type="reset"],
 input[type="submit"] {
   -webkit-appearance: button;
   cursor: pointer; }
@@ -315,7 +314,8 @@ pre {
   padding: 15px;
   text-align: right;
   border-top: 1px solid #e5e5e5; }
-  .modal-footer:before, .modal-footer:after {
+  .modal-footer:before,
+  .modal-footer:after {
     content: " ";
     display: table; }
   .modal-footer:after {
@@ -339,16 +339,16 @@ pre {
   .modal-dialog {
     width: 600px;
     margin: 30px auto; }
-
   .modal-content {
     -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5); }
-
   .modal-sm {
     width: 300px; } }
+
 @media (min-width: 992px) {
   .modal-lg {
     width: 900px; } }
+
 /*!
  * jQuery UI CSS Framework 1.11.4
  * http://jqueryui.com
@@ -560,7 +560,8 @@ pre {
   padding: 0.5em;
   font-size: 0.8em;
   background: #ddd; }
-  .lb-field-list-item-meta:before, .lb-field-list-item-meta:after {
+  .lb-field-list-item-meta:before,
+  .lb-field-list-item-meta:after {
     content: ' ';
     display: table; }
   .lb-field-list-item-meta:after {
@@ -583,9 +584,11 @@ pre {
   .lb-col img {
     max-width: 100%; }
 
-.lb-cols:before, .lb-cols:after {
+.lb-cols:before,
+.lb-cols:after {
   content: " ";
   display: table; }
+
 .lb-cols:after {
   clear: both; }
 
@@ -594,7 +597,8 @@ pre {
   padding: 0.5em;
   font-size: 0.8em;
   background: #ddd; }
-  .lb-meta:before, .lb-meta:after {
+  .lb-meta:before,
+  .lb-meta:after {
     content: ' ';
     display: table; }
   .lb-meta:after {
