@@ -22,9 +22,15 @@ class Element
 		$this->_extra = $extra;
 	}
 
-	public function render($values)
+	/**
+	 * Render the element.
+	 * @param  object $values Object containing all of the values of this element instance.
+	 * @param  object $inst   Optional, may contain the actual element instance, or may be null.
+	 * @return string         Rendered HTML.
+	 */
+	public function render($values, $inst = null, $language = null)
 	{
-		return call_user_func_array($this->_render, array($values));
+		return call_user_func_array($this->_render, array($values, $inst, $language));
 	}
 
 	public function getFields()

@@ -3,7 +3,6 @@
 namespace LayoutBuilder;
 
 require_once __DIR__ . '/config.php';
-
 require_once LB_LIB . 'Exception.php';
 
 function view($name, $args = array())

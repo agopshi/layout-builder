@@ -2,6 +2,8 @@
 
 namespace LayoutBuilder;
 
+require_once __DIR__ . '/../app/config.php';
+require_once LB_APP . 'views.php';
 require_once __DIR__ . '/Element.php';
 require_once __DIR__ . '/Exception.php';
 
@@ -11,8 +13,16 @@ class ElementProvider
 
 	public function __construct()
 	{
-		$this->register('row', function() {
-			// rows are rendered manually, this only serves as a placeholder
+		/**
+		 * Register default row element, which just renders its columns. Note that this is only
+		 * used by LayoutBuilder\Output. It is not used by LayoutBuilder\Builder.
+		 */
+		$this->register('row', function($values, $inst, $language) {
+			return view('output/row', array(
+				'elementProvider' => $this,
+				'language' => $language,
+				'row' => $inst
+			));
 		});
 	}
 
