@@ -2,56 +2,8 @@
 
 namespace LayoutBuilder;
 
+require_once __DIR__ . '/Element.php';
 require_once __DIR__ . '/Exception.php';
-
-class Element
-{
-	protected $_code = '';
-	protected $_render = null;
-	protected $_extra = array();
-
-	public function __construct($code, $render, $extra = array())
-	{
-		if (!is_callable($render))
-		{
-			throw new InvalidArgumentException('$render must be callable!');
-		}
-
-		$this->_code = $code;
-		$this->_render = $render;
-		$this->_extra = $extra;
-	}
-
-	public function render($values)
-	{
-		return call_user_func_array($this->_render, array($values));
-	}
-
-	public function getFields()
-	{
-		if (isset($this->_extra['fields']))
-		{
-			return $this->_extra['fields'];
-		}
-
-		return array();
-	}
-
-	public function getCode()
-	{
-		return $this->_code;
-	}
-
-	public function getLabel()
-	{
-		if (isset($this->_extra['label']))
-		{
-			return $this->_extra['label'];
-		}
-
-		return ucfirst($this->_code);
-	}
-}
 
 class ElementProvider
 {
@@ -64,9 +16,28 @@ class ElementProvider
 		});
 	}
 
+	/**
+	 * Register simple element by code, render function, and extra information.
+	 */
 	public function register($code, $render, $extra = array())
 	{
-		$this->_elements[$code] = new Element($code, $render, $extra);
+		$this->registerInstance(new Element($code, $render, $extra));
+	}
+
+	/**
+	 * Register complex element by class. Class must subclass Element.
+	 */
+	public function registerClass($class)
+	{
+		$this->registerInstance(new $class());
+	}
+
+	/**
+	 * Register complex element by instance. Instance must be a subclass of Element.
+	 */
+	public function registerInstance(Element $inst)
+	{
+		$this->_elements[$inst->getCode()] = $inst;
 	}
 
 	public function get($code)
