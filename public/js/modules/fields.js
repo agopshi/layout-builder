@@ -127,4 +127,28 @@
 			}
 		}
 	}]);
+
+	module.directive('lbFieldsImgSrc', [function() {
+		function link(scope, elem, attrs)
+		{
+			elem.on('load', function() {
+				elem.show();
+			});
+
+			elem.on('error', function() {
+				elem.hide();
+			});
+
+			scope.$watch('src', _.debounce(function(newValue, oldValue) {
+				elem[0].src = newValue;
+			}, 250));
+		}
+
+		return {
+			link: link,
+			scope: {
+				src: '=lbFieldsImgSrc'
+			}
+		}
+	}]);
 })(angular);
