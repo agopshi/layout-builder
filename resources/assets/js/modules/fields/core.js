@@ -1,7 +1,8 @@
 (function(angular) {
 	var app = window.layoutBuilder,
 		module = app.modules.fields = angular.module('lb.fields', [
-			'ui.sortable'
+			'ui.sortable',
+			'localytics.directives'
 		]);
 
 	module.service('lb.fields.config', function() {

@@ -10,10 +10,21 @@
 					<textarea ng-model="values[field.code]"></textarea>
 				</div>
 				<div ng-switch-when="select">
-					<select
-						ng-init="values[field.code] = values[field.code] || field.default"
-						ng-model="values[field.code]"
-						ng-options="option.value as option.label for option in field.options"></select>
+					<div ng-switch="field.chosen" class="lb-field-value">
+						<div ng-switch-when="false">
+							<select
+								ng-init="values[field.code] = values[field.code] || field.default"
+								ng-model="values[field.code]"
+								ng-options="option.value as option.label for option in field.options"></select>
+						</div>
+						<div ng-switch-when="true">
+							<select
+								chosen
+								ng-init="values[field.code] = values[field.code] || field.default"
+								ng-model="values[field.code]"								
+								ng-options="option.value as option.label for option in field.options"></select>
+						</div>
+					</div>
 				</div>
 				<div ng-switch-when="list" class="lb-field-list">
 					<div ui-sortable ng-model="values[field.code]">
@@ -36,3 +47,4 @@
 		</div>
 	</div>
 </script>
+

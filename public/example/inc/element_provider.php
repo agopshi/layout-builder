@@ -84,6 +84,7 @@ $elementProvider->register('list', function($values) {
 			'label' => 'Type',
 			'code' => 'type',
 			'type' => 'select',
+			'chosen' => "true",
 			'options' => array(
 				array(
 					'label' => 'Ordered',
