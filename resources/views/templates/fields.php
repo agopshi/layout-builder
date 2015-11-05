@@ -10,18 +10,29 @@
 					<textarea ng-model="values[field.code]"></textarea>
 				</div>
 				<div ng-switch-when="select">
-					<div ng-switch="field.chosen" class="lb-field-value">
-						<div ng-switch-when="false">
-							<select
-								ng-init="values[field.code] = values[field.code] || field.default"
+					<div ng-switch="field.multiple">
+						<div ng-switch-when="true">
+							<select ng-if="field.chosen"							
+								chosen								
+								multiple
+								ng-init="values[field.code] = values[field.code] || field.default "
+								ng-model="values[field.code]"
+								ng-options="option.value as option.label for option in field.options"></select>
+							<select ng-if="!field.chosen"															
+								multiple
+								ng-init="values[field.code] = values[field.code] || field.default "
 								ng-model="values[field.code]"
 								ng-options="option.value as option.label for option in field.options"></select>
 						</div>
-						<div ng-switch-when="true">
-							<select
-								chosen
-								ng-init="values[field.code] = values[field.code] || field.default"
-								ng-model="values[field.code]"								
+						<div ng-switch-when="false">
+							<select ng-if="field.chosen"							
+								chosen								
+								ng-init="values[field.code] = values[field.code] || field.default "
+								ng-model="values[field.code]"
+								ng-options="option.value as option.label for option in field.options"></select>
+							<select ng-if="!field.chosen"															
+								ng-init="values[field.code] = values[field.code] || field.default "
+								ng-model="values[field.code]"
 								ng-options="option.value as option.label for option in field.options"></select>
 						</div>
 					</div>
