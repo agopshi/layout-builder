@@ -153,4 +153,29 @@
 			}
 		}
 	}]);
+
+	module.directive('lbFieldsSelect', [ '$compile', function($compile) {
+		function link(scope, elem, attrs)
+		{		
+			if (scope.select.chosen) {
+				elem.attr('chosen','');
+			}
+			if (scope.select.multiple) {
+				elem.attr('multiple','');				
+			}
+
+			// dynamically compile the HTML so that we don't put Angular into an infinite loop			
+			$compile(elem)(scope, function(cloned, scope){
+				
+			});
+			
+		}
+
+		return {
+			link: link,				
+			scope: {
+				select: '=lbFieldsSelect'
+			}
+		}
+	}]);
 })(angular);

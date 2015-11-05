@@ -91,7 +91,7 @@ $elementProvider->register('list', function($values) {
 			'label' => 'Type',
 			'code' => 'type',
 			'type' => 'select',
-			'chosen' => false,
+			'chosen' => true,
 			'multiple' => false,
 			'options' => array(
 				array(

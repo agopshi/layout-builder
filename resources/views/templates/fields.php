@@ -12,33 +12,11 @@
 				<div ng-switch-when="wysiwyg">
 					<textarea ckeditor="field.options" ng-model="values[field.code]" ></textarea>					
 				</div>
-				<div ng-switch-when="select">
-					<div ng-switch="field.multiple">
-						<div ng-switch-when="true">
-							<select ng-if="field.chosen"							
-								chosen								
-								multiple
-								ng-init="values[field.code] = [values[field.code]] || [field.default] "
-								ng-model="values[field.code]"
-								ng-options="option.value as option.label for option in field.options"></select>
-							<select ng-if="!field.chosen"															
-								multiple
-								ng-init="values[field.code] = [values[field.code]] || [field.default] "
-								ng-model="values[field.code]"
-								ng-options="option.value as option.label for option in field.options"></select>
-						</div>
-						<div ng-switch-when="false">
-							<select ng-if="field.chosen"							
-								chosen								
-								ng-init="values[field.code] = values[field.code] || field.default "
-								ng-model="values[field.code]"
-								ng-options="option.value as option.label for option in field.options"></select>
-							<select ng-if="!field.chosen"															
-								ng-init="values[field.code] = values[field.code] || field.default "
-								ng-model="values[field.code]"
-								ng-options="option.value as option.label for option in field.options"></select>
-						</div>
-					</div>
+				<div ng-switch-when="select">					
+					<select 
+						lb-fields-select="field"
+						ng-model="values[field.code]" 
+						ng-options="option.value as option.label for option in field.options"></select>				
 				</div>
 				<div ng-switch-when="list" class="lb-field-list">
 					<div ui-sortable ng-model="values[field.code]">
