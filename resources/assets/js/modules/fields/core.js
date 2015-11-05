@@ -2,7 +2,8 @@
 	var app = window.layoutBuilder,
 		module = app.modules.fields = angular.module('lb.fields', [
 			'ui.sortable',
-			'localytics.directives'
+			'localytics.directives',
+			'ngCkeditor'
 		]);
 
 	module.service('lb.fields.config', function() {
