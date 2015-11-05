@@ -18,12 +18,12 @@
 							<select ng-if="field.chosen"							
 								chosen								
 								multiple
-								ng-init="values[field.code] = values[field.code] || field.default "
+								ng-init="values[field.code] = [values[field.code]] || [field.default] "
 								ng-model="values[field.code]"
 								ng-options="option.value as option.label for option in field.options"></select>
 							<select ng-if="!field.chosen"															
 								multiple
-								ng-init="values[field.code] = values[field.code] || field.default "
+								ng-init="values[field.code] = [values[field.code]] || [field.default] "
 								ng-model="values[field.code]"
 								ng-options="option.value as option.label for option in field.options"></select>
 						</div>
