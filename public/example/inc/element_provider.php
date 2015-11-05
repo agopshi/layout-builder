@@ -23,7 +23,14 @@ $elementProvider->register('html', function($values) {
 		array(
 			'label' => 'HTML',
 			'code' => 'html',
-			'type' => 'textarea'
+			'type' => 'wysiwyg',
+			'options' =>  array(
+				'toolbar' => 'minimal', //minimal, basic, full
+				//"language" => 'es',
+				//"uiColor" => '#F7B42C',
+				//"height" => 200,
+				//"toolbarCanCollapse" => true
+    		)
 		),
 		array(
 			'label' => 'JavaScript',
@@ -85,7 +92,7 @@ $elementProvider->register('list', function($values) {
 			'code' => 'type',
 			'type' => 'select',
 			'chosen' => false,
-			'multiple' => true,
+			'multiple' => false,
 			'options' => array(
 				array(
 					'label' => 'Ordered',

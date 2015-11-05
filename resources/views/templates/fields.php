@@ -9,6 +9,9 @@
 				<div ng-switch-when="textarea">
 					<textarea ng-model="values[field.code]"></textarea>
 				</div>
+				<div ng-switch-when="wysiwyg">
+					<textarea ckeditor="field.options" ng-model="values[field.code]" ></textarea>					
+				</div>
 				<div ng-switch-when="select">
 					<div ng-switch="field.multiple">
 						<div ng-switch-when="true">
