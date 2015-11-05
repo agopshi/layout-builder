@@ -326,7 +326,7 @@
 
                 var onLoad = function () {
                     var options = {
-                        toolbar: 'full',
+                        toolbar: 'basic',
                         toolbar_full: [ //jshint ignore:line
                             {
                                 name: 'basicstyles',
@@ -345,10 +345,25 @@
                             {name: 'forms', items: ['Outdent', 'Indent']},
                             {name: 'clipboard', items: ['Undo', 'Redo']},
                             {name: 'document', items: ['PageBreak', 'Source']}
+                        ], 
+                        toolbar_minimal: [ //jshint ignore:line
+                            {
+                                name: 'basicstyles',
+                                items: ['Bold', 'Italic', 'Strike', 'Underline']
+                            }                            
+                        ], 
+                        toolbar_basic: [ //jshint ignore:line
+                            {
+                                name: 'basicstyles',
+                                items: ['Bold', 'Italic', 'Strike', 'Underline']
+                            },
+                            {name: 'paragraph', items: ['BulletedList', 'NumberedList', 'Blockquote']},
+                            {name: 'editing', items: ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock']},
+                            {name: 'links', items: ['Link', 'Unlink', 'Anchor']},
                         ],
                         disableNativeSpellChecker: false,
                         uiColor: '#FAFAFA',
-                        height: '400px',
+                        height: '200px',
                         width: '100%'
                     };                    
 
