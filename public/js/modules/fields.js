@@ -155,26 +155,30 @@
 	}]);
 
 	module.directive('lbFieldsSelect', [ '$compile', function($compile) {
+		
+		
 		function link(scope, elem, attrs)
 		{		
-			if (scope.select.chosen) {
+			if (scope.field.chosen) {
 				elem.attr('chosen','');
 			}
-			if (scope.select.multiple) {
+			if (scope.field.multiple) {
 				elem.attr('multiple','');				
 			}
 
+			//Remove these attributes so they select doesn't get compiled infinitely
+			elem.removeAttr('lb-fields-select');
+			elem.removeAttr('data-lb-fields-select');
+
 			// dynamically compile the HTML so that we don't put Angular into an infinite loop			
-			$compile(elem)(scope, function(cloned, scope){
-				
-			});
+			$compile(elem)(scope);
 			
 		}
 
 		return {
 			link: link,				
 			scope: {
-				select: '=lbFieldsSelect'
+				field: '=lbFieldsSelect'
 			}
 		}
 	}]);
