@@ -27,7 +27,7 @@ $elementProvider->register('html', function($values) {
 			'options' =>  array(
 				'toolbar' => 'minimal', //minimal, basic, full
 				//"language" => 'es',
-				//"uiColor" => '#F7B42C',
+				"uiColor" => '#F7B42C',
 				//"height" => 200,
 				//"toolbarCanCollapse" => true
     		)

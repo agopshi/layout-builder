@@ -97,14 +97,15 @@
                     	LOEWY
                     	KB - Changed to search deep into scope objects
                     			- so that objects do not need to be directly on the scope
-                    */
                     var section = scope;
                     var inOptions = attrs.ckeditor.split('.');                    
                     for(x in inOptions){
                     	section = section[inOptions[x]];                    	
                     }
                     
-                    options = angular.extend(options, section);
+                    //options = angular.extend(options, section);
+                    */
+                    options = angular.extend(options, scope[attrs.ckeditor]);
                     
 
                     var instance = (isTextarea) ? CKEDITOR.replace(element[0], options) : CKEDITOR.inline(element[0], options),

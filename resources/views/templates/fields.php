@@ -10,7 +10,10 @@
 					<textarea ng-model="values[field.code]"></textarea>
 				</div>
 				<div ng-switch-when="wysiwyg">
-					<textarea ckeditor="field.options" ng-model="values[field.code]" ></textarea>					
+					<textarea 
+						ng-model="values[field.code]"
+						ng-init="options = field.options"
+						ckeditor="options" ></textarea>
 				</div>
 				<div ng-switch-when="select">					
 					<select 
