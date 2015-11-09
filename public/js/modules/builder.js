@@ -435,7 +435,6 @@
 			templateUrl: '/templates/builder/layout/row.html',
 			scope: {
 				row: '=lbLayoutRow',
-				isRoot: '=lbLayoutIsRoot',
 				remove: '&'
 			},
 			controller: ['$scope', controller]
