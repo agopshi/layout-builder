@@ -62,7 +62,8 @@
 
 			$scope.colSortable = {
 				handle: '.lb-meta',
-				connectWith: '.lb-cols'
+				connectWith: '.lb-cols',
+				helper: 'clone'
 			};
 		}
 

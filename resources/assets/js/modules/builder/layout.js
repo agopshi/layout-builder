@@ -50,7 +50,8 @@
 
 			$scope.rowSortable = {
 				handle: '.lb-meta',
-				connectWith: '.lb-rows'
+				connectWith: '.lb-rows',
+				helper: 'clone'
 			};
 			
 			
