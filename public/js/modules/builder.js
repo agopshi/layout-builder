@@ -206,6 +206,8 @@
 
 				return {
 					type: type,
+					
+					fluidity: 'fixed',
 
 					// for rows
 					cols: [],
@@ -242,12 +244,17 @@
 				handle: '.lb-meta',
 				connectWith: '.lb-rows'
 			};
+			
+			
+			
+			$scope.isRoot = !(angular.isDefined($scope.nested) ? $scope.nested : false);
 		}
 
 		return {
 			templateUrl: '/templates/builder/layout.html',
 			scope: {
-				rows: '=lbLayout'
+				rows: '=lbLayout',
+				nested: '=lbLayoutIsNested'
 			},
 			controller: ['$scope', '$uibModal', controller]
 		};
@@ -256,8 +263,8 @@
 	module.directive('lbLayoutNested', ['$compile', function($compile) {
 		function link(scope, elem, attrs)
 		{
-			var html = '<div lb-layout="rows"></div>';
-
+			var html = '<div lb-layout="rows" lb-layout-is-nested="true"></div>';
+			
 			// dynamically compile the HTML so that we don't put Angular into an infinite loop
 			$compile(html)(scope, function(innerElem, scope) {
 				elem.append(innerElem);
@@ -414,6 +421,7 @@
 
 			$scope.colBps = app.COL_BPS;
 			$scope.colSizes = app.COL_SIZES;
+			$scope.rowFluidities = app.ROW_FLUIDITIES;
 
 			$scope.colSortable = {
 				handle: '.lb-meta',
@@ -425,6 +433,7 @@
 			templateUrl: '/templates/builder/layout/row.html',
 			scope: {
 				row: '=lbLayoutRow',
+				isRoot: '=lbLayoutIsRoot',
 				remove: '&'
 			},
 			controller: ['$scope', controller]

@@ -5,6 +5,7 @@
 			<button ng-click="edit()">Edit</button>
 		</div>
 		<div class="lb-meta-right">
+			<select ng-if="isRoot && row.type == 'row'"  ng-model="row.fluidity" ng-options="fluidity for fluidity in rowFluidities"></select>
 			<button ng-click="remove()">-</button>
 		</div>
 	</div>

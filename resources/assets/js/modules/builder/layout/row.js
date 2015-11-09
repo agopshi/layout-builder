@@ -58,6 +58,7 @@
 
 			$scope.colBps = app.COL_BPS;
 			$scope.colSizes = app.COL_SIZES;
+			$scope.rowFluidities = app.ROW_FLUIDITIES;
 
 			$scope.colSortable = {
 				handle: '.lb-meta',
@@ -69,6 +70,7 @@
 			templateUrl: '/templates/builder/layout/row.html',
 			scope: {
 				row: '=lbLayoutRow',
+				isRoot: '=lbLayoutIsRoot',
 				remove: '&'
 			},
 			controller: ['$scope', controller]
