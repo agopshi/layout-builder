@@ -16,10 +16,11 @@
 						ckeditor="options" ></textarea>
 				</div>
 				<div ng-switch-when="select">					
-					<select 
-						lb-fields-select="field"
-						ng-model="values[field.code]" 
-						ng-options="option.value as option.label for option in field.options"></select>				
+					<div lb-fields-select
+						is-chosen="field.chosen"
+						is-multiple="field.multiple"
+						model="values[field.code]"
+						options="field.options"></div>
 				</div>
 				<div ng-switch-when="list" class="lb-field-list">
 					<div ui-sortable ng-model="values[field.code]">
