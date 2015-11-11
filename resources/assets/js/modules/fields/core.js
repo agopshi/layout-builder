@@ -3,7 +3,7 @@
 		module = app.modules.fields = angular.module('lb.fields', [
 			'ui.sortable',
 			'localytics.directives',
-			'ngCkeditor'
+			'ckeditor'
 		]);
 
 	module.service('lb.fields.config', function() {

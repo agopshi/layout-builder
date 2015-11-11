@@ -25,11 +25,33 @@ $elementProvider->register('html', function($values) {
 			'code' => 'html',
 			'type' => 'wysiwyg',
 			'options' =>  array(
-				'toolbar' => 'minimal', //minimal, basic, full
+				'toolbar' => 'basic',
+				//"toolbarCanCollapse" => true,
 				//"language" => 'es',
-				"uiColor" => '#F7B42C',
-				//"height" => 200,
-				//"toolbarCanCollapse" => true
+				//"uiColor" => '#F7B42C',
+				"height" => '75px',				
+				"toolbar_basic" => array(
+                    array(
+                        "name" => 'styles',
+                        "items" => array('Format', 'FontSize', 'TextColor')
+                    ),
+					array(
+						"name" => 'basicstyles',
+                        "items" => array('Bold', 'Italic', 'Underline')
+					),
+					array(
+						"name" => 'paragraph', 
+						"items" => array('BulletedList', 'NumberedList')
+					),                    
+                    array(
+                    	"name" => 'links', 
+                    	"items" => array('Link', 'Unlink')
+                    ),
+                    array(
+                       	"name" => 'insert', 
+                       	"items" => array('Image', 'Table', 'SpecialChar')
+                    )
+				)				
     		)
 		),
 		array(

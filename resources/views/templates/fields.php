@@ -11,9 +11,8 @@
 				</div>
 				<div ng-switch-when="wysiwyg">
 					<textarea 
-						ng-model="values[field.code]"
-						ng-init="options = field.options"
-						ckeditor="options" ></textarea>
+						ng-model="values[field.code]"						
+						ckeditor="field.options" ></textarea>
 				</div>
 				<div ng-switch-when="select">					
 					<div lb-fields-select
