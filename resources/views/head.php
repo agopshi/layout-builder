@@ -13,5 +13,5 @@
 		<link rel="stylesheet" href="<?php echo $config->getPublicUrl('css/main.css'); ?>" />
 	</head>
 
-	<body>
+	<body class="lb-editor">
 		
