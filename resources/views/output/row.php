@@ -11,7 +11,8 @@ $row = $args['row'];
 			echo LayoutBuilder\view('output/layout', array(
 				'elementProvider' => $elementProvider,
 				'language' => $language,
-				'rows' => $col->rows
+				'rows' => $col->rows,
+				'isRoot' => false
 			));
 			?>
 		</div>

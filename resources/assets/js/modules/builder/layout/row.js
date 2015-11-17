@@ -58,10 +58,12 @@
 
 			$scope.colBps = app.COL_BPS;
 			$scope.colSizes = app.COL_SIZES;
+			$scope.rowFluidities = app.ROW_FLUIDITIES;
 
 			$scope.colSortable = {
 				handle: '.lb-meta',
-				connectWith: '.lb-cols'
+				connectWith: '.lb-cols',
+				helper: 'clone'
 			};
 		}
 

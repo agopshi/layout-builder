@@ -14,6 +14,8 @@
 
 				return {
 					type: type,
+					
+					fluidity: 'fixed',
 
 					// for rows
 					cols: [],
@@ -48,14 +50,20 @@
 
 			$scope.rowSortable = {
 				handle: '.lb-meta',
-				connectWith: '.lb-rows'
+				connectWith: '.lb-rows',
+				helper: 'clone'
 			};
+			
+			
+			
+			$scope.isRoot = !(angular.isDefined($scope.nested) ? $scope.nested : false);
 		}
 
 		return {
 			templateUrl: '/templates/builder/layout.html',
 			scope: {
-				rows: '=lbLayout'
+				rows: '=lbLayout',
+				nested: '=lbLayoutIsNested'
 			},
 			controller: ['$scope', '$uibModal', controller]
 		};
@@ -64,8 +72,8 @@
 	module.directive('lbLayoutNested', ['$compile', function($compile) {
 		function link(scope, elem, attrs)
 		{
-			var html = '<div lb-layout="rows"></div>';
-
+			var html = '<div lb-layout="rows" lb-layout-is-nested="true"></div>';
+			
 			// dynamically compile the HTML so that we don't put Angular into an infinite loop
 			$compile(html)(scope, function(innerElem, scope) {
 				elem.append(innerElem);
