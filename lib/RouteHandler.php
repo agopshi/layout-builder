@@ -18,7 +18,7 @@ class RouteHandler
 
 	protected function _prepareJsonOutput()
 	{
-		header('Content-Type', 'application/json');
+		header('Content-Type: application/json');
 	}
 
 	protected function _dispatch($data)
