@@ -110,7 +110,8 @@ class RouteHandler
 		$elementType = $this->_sanitizeIdentifier($data->elementType);
 		$elementData = isset($data->elementData) ? $data->elementData : null;
 
-		$this->_prepareJsonOutput();
+		// response as text/html, not json
+		// $this->_prepareJsonOutput();
 
 		$output = new Output($this->_elementProvider);
 		echo $output->renderElement($elementType, $elementData);
