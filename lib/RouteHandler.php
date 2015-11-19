@@ -114,7 +114,7 @@ class RouteHandler
 		// $this->_prepareJsonOutput();
 
 		$output = new Output($this->_elementProvider);
-		echo $output->renderElement($elementType, $elementData);
+		echo $output->renderElement($elementType, $elementData, true);
 	}
 
 	/**

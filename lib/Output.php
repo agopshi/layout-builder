@@ -24,12 +24,14 @@ class Output
 		));
 	}
 
-	public function renderElement($type, $data = null)
+	public function renderElement($type, $data = null, $editMode = false)
 	{
 		if ($data === null)
 		{
 			$data = new \stdClass();
 		}
+		
+		$data->_edit_mode = $editMode;
 
 		return $this->_elementProvider->get($type)->render($data);
 	}
