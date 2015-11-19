@@ -17,9 +17,11 @@ class ElementProvider
 		 * Register default row element, which just renders its columns. Note that this is only
 		 * used by LayoutBuilder\Output. It is not used by LayoutBuilder\Builder.
 		 */
-		$this->register('row', function($values, $inst, $language) {
+		// workaround for $this not available in PHP 5.3.0
+		$elementProvider = $this;
+		$this->register('row', function($values, $inst, $language) use ($elementProvider) {
 			return view('output/row', array(
-				'elementProvider' => $this,
+				'elementProvider' => $elementProvider,
 				'language' => $language,
 				'row' => $inst
 			));
