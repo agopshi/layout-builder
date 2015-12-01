@@ -11,6 +11,7 @@
 		<?php endforeach; ?>
 
 		<link rel="stylesheet" href="<?php echo $config->getPublicUrl('css/main.css'); ?>" />
+		<link rel="stylesheet" href="<?php echo $config->getPublicUrl('css/chosen.css'); ?>" />
 	</head>
 
 	<body class="lb-editor">

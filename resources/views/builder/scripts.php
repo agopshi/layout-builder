@@ -48,6 +48,10 @@ $state = $args['state'];
 	};
 </script>
 
+<script>
+    var CKEDITOR_BASEPATH = '<?php echo $config->getPublicUrl('lib/ckeditor/'); ?>';
+</script>
 <script src="<?php echo $config->getPublicUrl('js/vendor.js'); ?>"></script>
 <script src="<?php echo $config->getPublicUrl('js/modules/fields.js'); ?>"></script>
 <script src="<?php echo $config->getPublicUrl('js/modules/builder.js'); ?>"></script>
+<script src="<?php echo $config->getPublicUrl('lib/ckeditor/ckeditor.js'); ?>"></script>

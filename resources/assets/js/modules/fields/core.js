@@ -1,7 +1,9 @@
 (function(angular) {
 	var app = window.layoutBuilder,
 		module = app.modules.fields = angular.module('lb.fields', [
-			'ui.sortable'
+			'ui.sortable',
+			'localytics.directives',
+			'ckeditor'
 		]);
 
 	module.service('lb.fields.config', function() {
@@ -148,6 +150,46 @@
 			link: link,
 			scope: {
 				src: '=lbFieldsImgSrc'
+			}
+		}
+	}]);
+
+	module.directive('lbFieldsSelect', [ '$compile', function($compile) {
+		function link(scope, elem, attrs)
+		{			
+			
+			var attributes = [];
+
+			if (scope.isChosen)
+			{
+				attributes.push('chosen');				
+			}
+
+			if (scope.isMultiple)
+			{
+				attributes.push('multiple');
+				scope.model = []; 			//Multiple select boxes need an array as the model.
+			}
+			
+			attributes.push('ng-model="model"');
+			attributes.push('ng-options="option.value as option.label for option in options"');
+			
+			html = "<select " + 
+							attributes.join(" ") + 
+						"></select>";			
+
+			// dynamically compile the HTML so that we don't put Angular into an infinite loop								
+			elem.replaceWith($compile(html)(scope));
+			
+		}
+
+		return {
+			link: link,
+			scope: {				
+				isChosen: '=',
+				isMultiple: '=',
+				options: '=',
+				model: '='
 			}
 		}
 	}]);

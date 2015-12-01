@@ -1,7 +1,9 @@
 (function(angular) {
 	var app = window.layoutBuilder,
 		module = app.modules.fields = angular.module('lb.fields', [
-			'ui.sortable'
+			'ui.sortable',
+			'localytics.directives',
+			'ckeditor'
 		]);
 
 	module.service('lb.fields.config', function() {
@@ -151,4 +153,305 @@
 			}
 		}
 	}]);
+
+	module.directive('lbFieldsSelect', [ '$compile', function($compile) {
+		function link(scope, elem, attrs)
+		{			
+			
+			var attributes = [];
+
+			if (scope.isChosen)
+			{
+				attributes.push('chosen');				
+			}
+
+			if (scope.isMultiple)
+			{
+				attributes.push('multiple');
+				scope.model = []; 			//Multiple select boxes need an array as the model.
+			}
+			
+			attributes.push('ng-model="model"');
+			attributes.push('ng-options="option.value as option.label for option in options"');
+			
+			html = "<select " + 
+							attributes.join(" ") + 
+						"></select>";			
+
+			// dynamically compile the HTML so that we don't put Angular into an infinite loop								
+			elem.replaceWith($compile(html)(scope));
+			
+		}
+
+		return {
+			link: link,
+			scope: {				
+				isChosen: '=',
+				isMultiple: '=',
+				options: '=',
+				model: '='
+			}
+		}
+	}]);
 })(angular);
+
+(function (root, factory) {
+  // AMD
+  if (typeof define === 'function' && define.amd) define(['angular'], factory);
+  // Global
+  else factory(angular);
+}(this, function (angular) {
+
+  angular
+  .module('ckeditor', [])
+  .directive('ckeditor', ['$parse', ckeditorDirective]);
+
+  // Polyfill setImmediate function.
+  var setImmediate = window && window.setImmediate ? window.setImmediate : function (fn) {
+    setTimeout(fn, 0);
+  };
+
+  /**
+   * CKEditor directive.
+   *
+   * @example
+   * <div ckeditor="options" ng-model="content" ready="onReady()"></div>
+   */
+
+  function ckeditorDirective($parse) {
+    return {
+      restrict: 'A',
+      require: ['ckeditor', 'ngModel'],
+      controller: [
+        '$scope',
+        '$element',
+        '$attrs',
+        '$parse',
+        '$q',
+        ckeditorController
+      ],
+      link: function (scope, element, attrs, ctrls) {
+        // get needed controllers
+        var controller = ctrls[0]; // our own, see below
+        var ngModelController = ctrls[1];
+
+        // Initialize the editor content when it is ready.
+        controller.ready().then(function initialize() {
+          // Sync view on specific events.
+          ['dataReady', 'change', 'blur', 'saveSnapshot'].forEach(function (event) {
+            controller.onCKEvent(event, function syncView() {
+              ngModelController.$setViewValue(controller.instance.getData() || '');
+            });
+          });
+
+          controller.instance.setReadOnly(!! attrs.readonly);
+          attrs.$observe('readonly', function (readonly) {
+            controller.instance.setReadOnly(!! readonly);
+          });
+
+          // Defer the ready handler calling to ensure that the editor is
+          // completely ready and populated with data.
+          setImmediate(function () {
+            $parse(attrs.ready)(scope);
+          });
+        });
+
+        // Set editor data when view data change.
+        ngModelController.$render = function syncEditor() {
+          controller.ready().then(function () {
+            controller.instance.setData(ngModelController.$viewValue || '');
+          });
+        };
+      }
+    };
+  }
+
+  /**
+   * CKEditor controller.
+   */
+
+  function ckeditorController($scope, $element, $attrs, $parse, $q) {
+    var config = $parse($attrs.ckeditor)($scope) || {};
+    var editorElement = $element[0];
+    var instance;
+    var readyDeferred = $q.defer(); // a deferred to be resolved when the editor is ready
+
+    // Create editor instance.
+    if (editorElement.hasAttribute('contenteditable') &&
+        editorElement.getAttribute('contenteditable').toLowerCase() == 'true') {
+      instance = this.instance = CKEDITOR.inline(editorElement, config);
+    }
+    else {
+      instance = this.instance = CKEDITOR.replace(editorElement, config);
+    }
+
+    /**
+     * Listen on events of a given type.
+     * This make all event asynchronous and wrapped in $scope.$apply.
+     *
+     * @param {String} event
+     * @param {Function} listener
+     * @returns {Function} Deregistration function for this listener.
+     */
+
+    this.onCKEvent = function (event, listener) {
+      instance.on(event, asyncListener);
+
+      function asyncListener() {
+        var args = arguments;
+        setImmediate(function () {
+          applyListener.apply(null, args);
+        });
+      }
+
+      function applyListener() {
+        var args = arguments;
+        $scope.$apply(function () {
+          listener.apply(null, args);
+        });
+      }
+
+      // Return the deregistration function
+      return function $off() {
+        instance.removeListener(event, applyListener);
+      };
+    };
+
+    this.onCKEvent('instanceReady', function() {
+      readyDeferred.resolve(true);
+    });
+
+    /**
+     * Check if the editor if ready.
+     *
+     * @returns {Promise}
+     */
+    this.ready = function ready() {
+      return readyDeferred.promise;
+    };
+
+    // Destroy editor when the scope is destroyed.
+    $scope.$on('$destroy', function onDestroy() {
+      // do not delete too fast or pending events will throw errors
+      readyDeferred.promise.then(function() {
+        instance.destroy(false);
+      });
+    });
+  }
+}));
+// Generated by CoffeeScript 1.8.0
+(function() {
+  var __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
+
+  angular.module('localytics.directives', []);
+
+  angular.module('localytics.directives').directive('chosen', [
+    '$timeout', function($timeout) {
+      var CHOSEN_OPTION_WHITELIST, NG_OPTIONS_REGEXP, isEmpty, snakeCase;
+      NG_OPTIONS_REGEXP = /^\s*(.*?)(?:\s+as\s+(.*?))?(?:\s+group\s+by\s+(.*))?\s+for\s+(?:([\$\w][\$\w]*)|(?:\(\s*([\$\w][\$\w]*)\s*,\s*([\$\w][\$\w]*)\s*\)))\s+in\s+(.*?)(?:\s+track\s+by\s+(.*?))?$/;
+      CHOSEN_OPTION_WHITELIST = ['noResultsText', 'allowSingleDeselect', 'disableSearchThreshold', 'disableSearch', 'enableSplitWordSearch', 'inheritSelectClasses', 'maxSelectedOptions', 'placeholderTextMultiple', 'placeholderTextSingle', 'searchContains', 'singleBackstrokeDelete', 'displayDisabledOptions', 'displaySelectedOptions', 'width'];
+      snakeCase = function(input) {
+        return input.replace(/[A-Z]/g, function($1) {
+          return "_" + ($1.toLowerCase());
+        });
+      };
+      isEmpty = function(value) {
+        var key;
+        if (angular.isArray(value)) {
+          return value.length === 0;
+        } else if (angular.isObject(value)) {
+          for (key in value) {
+            if (value.hasOwnProperty(key)) {
+              return false;
+            }
+          }
+        }
+        return true;
+      };
+      return {
+        restrict: 'A',
+        require: '?ngModel',
+        terminal: true,
+        link: function(scope, element, attr, ngModel) {
+          var chosen, defaultText, disableWithMessage, empty, initOrUpdate, match, options, origRender, removeEmptyMessage, startLoading, stopLoading, valuesExpr, viewWatch;
+          element.addClass('localytics-chosen');
+          options = scope.$eval(attr.chosen) || {};
+          angular.forEach(attr, function(value, key) {
+            if (__indexOf.call(CHOSEN_OPTION_WHITELIST, key) >= 0) {
+              return options[snakeCase(key)] = scope.$eval(value);
+            }
+          });
+          startLoading = function() {
+            return element.addClass('loading').attr('disabled', true).trigger('chosen:updated');
+          };
+          stopLoading = function() {
+            return element.removeClass('loading').attr('disabled', false).trigger('chosen:updated');
+          };
+          chosen = null;
+          defaultText = null;
+          empty = false;
+          initOrUpdate = function() {
+            if (chosen) {
+              return element.trigger('chosen:updated');
+            } else {
+              chosen = element.chosen(options).data('chosen');
+              return defaultText = chosen.default_text;
+            }
+          };
+          removeEmptyMessage = function() {
+            empty = false;
+            return element.attr('data-placeholder', defaultText);
+          };
+          disableWithMessage = function() {
+            empty = true;
+            return element.attr('data-placeholder', chosen.results_none_found).attr('disabled', true).trigger('chosen:updated');
+          };
+          if (ngModel) {
+            origRender = ngModel.$render;
+            ngModel.$render = function() {
+              origRender();
+              return initOrUpdate();
+            };
+            if (attr.multiple) {
+              viewWatch = function() {
+                return ngModel.$viewValue;
+              };
+              scope.$watch(viewWatch, ngModel.$render, true);
+            }
+          } else {
+            initOrUpdate();
+          }
+          attr.$observe('disabled', function() {
+            return element.trigger('chosen:updated');
+          });
+          if (attr.ngOptions && ngModel) {
+            match = attr.ngOptions.match(NG_OPTIONS_REGEXP);
+            valuesExpr = match[7];
+            scope.$watchCollection(valuesExpr, function(newVal, oldVal) {
+              var timer;
+              return timer = $timeout(function() {
+                if (angular.isUndefined(newVal)) {
+                  return startLoading();
+                } else {
+                  if (empty) {
+                    removeEmptyMessage();
+                  }
+                  stopLoading();
+                  if (isEmpty(newVal)) {
+                    return disableWithMessage();
+                  }
+                }
+              });
+            });
+            return scope.$on('$destroy', function(event) {
+              if (typeof timer !== "undefined" && timer !== null) {
+                return $timeout.cancel(timer);
+              }
+            });
+          }
+        }
+      };
+    }
+  ]);
+
+}).call(this);
