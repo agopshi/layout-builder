@@ -11,6 +11,16 @@
   -ms-user-select: none;
       user-select: none;
 }
+
+.chosen-container input[type="text"] {
+	box-sizing: content-box;
+	min-width: 150px;
+}
+
+.chosen-container {
+	min-width: 160px;
+}
+
 .chosen-container .chosen-drop {
   position: absolute;
   top: 100%;
@@ -219,6 +229,7 @@
   font-family: sans-serif;
   line-height: normal;
   border-radius: 0;
+
 }
 .chosen-container-multi .chosen-choices li.search-field .default {
   color: #999;
