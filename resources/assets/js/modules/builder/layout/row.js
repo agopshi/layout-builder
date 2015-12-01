@@ -6,8 +6,10 @@
 		function createCol()
 		{
 			return {
-				bp: 'sm',
-				size: 6,
+				//bp: 'sm',
+				//size: 6,
+				// columns now can have multiple breakpoints (space delimiter).
+				bps: 'sm-6',
 				rows: []
 			}
 		}
@@ -56,8 +58,10 @@
 					});
 			};
 
-			$scope.colBps = app.COL_BPS;
-			$scope.colSizes = app.COL_SIZES;
+			// columns now can have multiple breakpoints (space delimiter).
+			// $scope.colBps = app.COL_BPS;
+			// $scope.colSizes = app.COL_SIZES;
+			
 			$scope.rowFluidities = app.ROW_FLUIDITIES;
 
 			$scope.colSortable = {

@@ -38,10 +38,16 @@
 
 .lb-meta-left {
 	float: left;
+	max-width: 100%;
 }
 
 .lb-meta-right {
 	float: right;
+	max-width: 100%;
+	
+	input, select {
+		max-width: 100%;
+	}
 }
 
 .lb-addButton {

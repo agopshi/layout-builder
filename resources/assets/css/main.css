@@ -605,10 +605,14 @@ pre {
     clear: both; }
 
 .lb-meta-left {
-  float: left; }
+  float: left;
+  max-width: 100%; }
 
 .lb-meta-right {
-  float: right; }
+  float: right;
+  max-width: 100%; }
+  .lb-meta-right input, .lb-meta-right select {
+    max-width: 100%; }
 
 .lb-addButton {
   display: block;

@@ -13,7 +13,7 @@
 	<div ng-switch="row.type">
 		<div ng-switch-when="row" class="row">
 			<div ui-sortable="colSortable" ng-model="row.cols" class="lb-cols">
-				<div ng-repeat="col in row.cols" class="lb-col col-{{col.bp}}-{{col.size}}">
+				<div ng-repeat="col in row.cols" class="lb-col {{col.bps|bpClass}}">
 					<div class="lb-meta">
 						<div class="lb-meta-left">
 							<button ng-click="addColumn($index)">+</button>
@@ -21,8 +21,11 @@
 							<button ng-click="removeColumn($index)">-</button>
 						</div>
 						<div class="lb-meta-right">
+							<input ng-model="col.bps" type="text" />
+							<!--
 							<select ng-model="col.bp" ng-options="bp for bp in colBps"></select>
 							<select ng-model="col.size" ng-options="size for size in colSizes"></select>
+							-->
 							<button ng-click="addColumn()">+</button>
 						</div>
 					</div>
