@@ -35,6 +35,10 @@ $elementProvider->register('html', function($values) {
                         "name" => 'styles',
                         "items" => array('Format', 'FontSize', 'TextColor')
                     ),
+                    array(
+                    	"name" => 'alignment',
+                    	"items" => array('JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock')
+                    ),
 					array(
 						"name" => 'basicstyles',
                         "items" => array('Bold', 'Italic', 'Underline')
