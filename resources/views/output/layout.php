@@ -5,7 +5,7 @@ $isRoot = $args['isRoot'];
 <?php foreach ($rows as $row): ?>
 	<?php
 	$openWrapper = $closeWrapper = '';
-	if ($isRoot && $row->type == 'row')
+	if ($isRoot)
 	{
 		$openWrapper = '<div class="'. ((isset($row->fluidity) && $row->fluidity == 'fluid') ? 'container-fluid' : 'container') .'">';
 		$closeWrapper = '</div>';
