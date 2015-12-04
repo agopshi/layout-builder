@@ -8,7 +8,10 @@
 <script type="text/ng-template" id="/templates/builder/layout.html">
 	<div ui-sortable="rowSortable" ng-model="rows" class="lb-rows">
 		<div ng-repeat="row in rows">
-			<div ng-attr-class="{{row.fluidity == 'fluid' ? 'container-fluid' : 'container'}}" ng-if="isRoot">
+			<div ng-attr-class="{{'container'}}" ng-if="isRoot && row.fluidity !== 'fluid'">
+				<div lb-layout-row="row" ng-init="row.isRoot = true" remove="removeRow($index)" class="lb-row"></div>
+			</div>
+			<div ng-attr-class="{{row.type == 'row' ? 'container-fluid' : 'container-full'}}" ng-if="isRoot && row.fluidity === 'fluid'">
 				<div lb-layout-row="row" ng-init="row.isRoot = true" remove="removeRow($index)" class="lb-row"></div>
 			</div>
 			
