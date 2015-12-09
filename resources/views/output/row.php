@@ -17,7 +17,7 @@ $row = $args['row'];
 			$bps = array_filter(preg_split('/\s+/', trim($col->bps)));
 			$bps = $col->bps;
 			
-			if (preg_match_all('/(?:xs|sm|md|lg)\-(?:[0-9]+)/', $bps, $matches, PREG_SET_ORDER))
+			if (preg_match_all('/(?:xs|sm|md|lg)\-?(?:push|pull|offset)?\-(?:[0-9]+)/', $bps, $matches, PREG_SET_ORDER))
 			{
 				$bps = array();
 				foreach ($matches as $m)

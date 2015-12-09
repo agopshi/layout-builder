@@ -15,7 +15,7 @@
 	module.filter('bpClass', function() {
 		return function(bps) {
 			var
-				r = new RegExp("(?:"+ app.COL_BPS.join('|') +")\-(?:[0-9]+)", "g")
+				r = new RegExp("(?:"+ app.COL_BPS.join('|') +")\-?(?:push|pull|offset)?\-(?:[0-9]+)", "g")
 				m = bps ? bps.match(r) : null;
 				
 			if (m && m.length)
