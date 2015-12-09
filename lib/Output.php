@@ -15,13 +15,20 @@ class Output
 		$this->_elementProvider = $elementProvider;
 	}
 
-	public function render($state, $language)
+	public function render($state, $language, $return = false)
 	{
-		echo view('output', array(
+		$output = view('output', array(
 			'elementProvider' => $this->_elementProvider,
 			'state' => $state,
 			'language' => $language
 		));
+		
+		if ($return)
+		{
+			return $output;
+		}
+		
+		echo $output;
 	}
 
 	public function renderElement($type, $data = null, $editMode = false)
