@@ -257,8 +257,9 @@
 			var hexRegex = new RegExp("#[0-9A-F]{3,6}", "i");
 			for (x in scope.options) 
 			{
-				var test = hexRegex.test(scope.options[x].value.trim());
-				console.log(test);
+				scope.options[x].title =  scope.options[x].label + ': ' + scope.options[x].value;
+
+				var test = hexRegex.test(scope.options[x].value.trim());				
 				if (test)
 				{				
 					scope.options[x].label =  $sce.trustAsHtml('<span style="background-color: '+scope.options[x].value+'"></span>');
@@ -270,8 +271,8 @@
 			}
 
 			var html = '<span ng-repeat="option in options" >' +
-							'<input ng-model="$parent.model" type="radio" name="{{code}}" id="{{code + $index}}" ng-value="option.value" />' +
-							'<label for="{{code + $index}}" ng-bind-html="option.label"></label>' +
+							'<input ng-model="$parent.model" type="radio" name="{{code}}" id="{{code + $index}}" ng-value="option.value" title="{{option.title}}" />' +
+							'<label for="{{code + $index}}" ng-bind-html="option.label" title="{{option.title}}"></label>' +
 						'</span>';
 
 			// dynamically compile the HTML so that we don't put Angular into an infinite loop
