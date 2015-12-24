@@ -174,4 +174,91 @@ $elementProvider->register('list', function($values) {
 	)
 ));
 
+
+$elementProvider->register('conditional', function($values) {
+	$html = '<p>test</p>';
+	return $html;
+}, array(
+	'label' => 'Conditional',
+	'fields' => array(
+		array(
+			'label' => 'Test',
+			'code' => 'test',
+			'type' => 'text'
+		),
+		array(
+			'label' => 'Type',
+			'code' => 'type',
+			'type' => 'select',
+			'options' => array(
+				array(
+					'label' => 'Option 1',
+					'value' => '1'
+				),
+				array(
+					'label' => 'Option 2',
+					'value' => '2'
+				)
+			)
+		),
+		array(
+			'label' => 'When Type equals to "Option 1"',
+			'code' => 'opt_1_value',
+			'type' => 'text',
+			'show_if' => "type == '1'"
+		),
+		array(
+			'label' => 'When Type not empty',
+			'code' => 'opt_2_value',
+			'type' => 'text',
+			'show_if' => "type"
+		),
+		array(
+			'label' => 'When Type equals to "Option 2" AND Test equals to "a"',
+			'code' => 'opt_3_value',
+			'type' => 'text',
+			'show_if' => "type == '2' && test == 'a'"
+		),
+		
+		array(
+			'label' => 'Items',
+			'code' => 'items',
+			'type' => 'list',
+			'list' => array(
+				array(
+					'label' => 'Text 1',
+					'code' => 'text1',
+					'type' => 'text'
+				),
+				array(
+					'label' => 'Text 2',
+					'code' => 'text2',
+					'type' => 'text'
+				),
+				array(
+					'label' => 'Type',
+					'code' => 'type',
+					'type' => 'select',
+					'options' => array(
+						array(
+							'label' => 'Option 1',
+							'value' => '1'
+						),
+						array(
+							'label' => 'Option 2',
+							'value' => '2'
+						)
+					)
+				),
+				array(
+					'label' => 'Text 3',
+					'code' => 'text3',
+					'type' => 'text',
+					'show_if' => "type == '2'"
+				),
+			)
+		)
+	)
+));
+
 return $elementProvider;

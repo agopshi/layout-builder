@@ -12,6 +12,62 @@
 		}
 		return config;
 	});
+	
+	/**
+	 * Field directive.
+	 */
+	module.directive('lbField', ['lb.fields.config', function(config) {
+		function link(scope, elem, attr)
+		{
+			if (typeof scope.field.show_if !== 'undefined')
+			{
+				scope.$watch(
+					'values', 
+					function(newValue, oldValue) {
+						var b = false;
+						
+						try {
+							b = scope.$eval(scope.field.show_if, scope.values);
+						} catch (ex) {
+							b = false;
+						}
+						
+						if (b)
+						{
+							scope.show();
+						}
+						else
+						{
+							scope.hide();
+						}
+					},
+					true
+				);
+			}
+		}
+		
+		function controller($scope, $element)
+		{
+			$scope.hide = function() {
+				$element.hide();
+				$element.find('input, textarea, select').val();
+				delete $scope.values[$scope.field.code];
+			}
+			
+			$scope.show = function() {
+				$element.show();
+			}
+		}
+		
+		return {
+			link: link,
+			scope: {
+				field: '=lbField',
+				values: '='
+			},
+			controller: ['$scope', '$element', controller]
+		};
+	}]);
 
 	/**
 	 * Fields editor directive.
