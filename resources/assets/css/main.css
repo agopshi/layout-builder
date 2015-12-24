@@ -550,6 +550,24 @@ pre {
     .lb-field-value input:first-child,
     .lb-field-value textarea:first-child {
       margin-top: 0; }
+  .lb-field-value input[type="radio"],
+  .lb-field-value input[type="radio"] + label,
+  .lb-field-value input[type="radio"] + label > span,
+  .lb-field-value input[type="checkbox"],
+  .lb-field-value input[type="checkbox"] + label {
+    width: auto;
+    display: inline-block;
+    vertical-align: middle; }
+  .lb-field-value input[type="radio"] + label > span {
+    border: 1px solid #bbb;
+    width: 30px;
+    height: 30px; }
+  .lb-field-value input[type="radio"],
+  .lb-field-value input[type="checkbox"] {
+    margin-right: 0.25em; }
+  .lb-field-value input[type="radio"] + label,
+  .lb-field-value input[type="checkbox"] + label {
+    margin-right: 0.75em; }
 
 .lb-field-list-item {
   margin-top: 0.5em; }

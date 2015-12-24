@@ -30,6 +30,32 @@
 			margin-top: 0;
 		}
 	}
+
+	input[type="radio"],
+	input[type="radio"] + label,
+	input[type="radio"] + label > span,
+	input[type="checkbox"],
+	input[type="checkbox"] + label {
+		width: auto;
+		display: inline-block;
+		vertical-align: middle;	
+	}
+
+	input[type="radio"] + label > span {
+		border: 1px solid #bbb;
+		width:30px;
+		height:30px;
+	}
+
+	input[type="radio"],
+	input[type="checkbox"] {
+		margin-right: 0.25em;
+	}
+
+	input[type="radio"] + label,
+	input[type="checkbox"] + label {
+		margin-right: 0.75em;
+	}
 }
 
 .lb-field-list {

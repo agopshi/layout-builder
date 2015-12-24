@@ -162,7 +162,7 @@
 
 			if (scope.isChosen)
 			{
-				attributes.push('chosen');				
+				attributes.push('chosen');
 			}
 
 			if (scope.isMultiple)
@@ -174,18 +174,18 @@
 			attributes.push('ng-model="model"');
 			attributes.push('ng-options="option.value as option.label for option in options"');
 			
-			html = "<select " + 
+			var html = "<select " + 
 							attributes.join(" ") + 
-						"></select>";			
+						"></select>";
 
-			// dynamically compile the HTML so that we don't put Angular into an infinite loop								
+			// dynamically compile the HTML so that we don't put Angular into an infinite loop
 			elem.replaceWith($compile(html)(scope));
 			
 		}
 
 		return {
 			link: link,
-			scope: {				
+			scope: {
 				isChosen: '=',
 				isMultiple: '=',
 				options: '=',
@@ -193,4 +193,43 @@
 			}
 		}
 	}]);
+
+	module.directive('lbFieldsRadio', [ '$compile', '$sce', function($compile, $sce) {
+		function link(scope, elem, attrs)
+		{
+			
+			var hexRegex = new RegExp("#[0-9A-F]{3,6}", "i");
+			for (x in scope.options) 
+			{
+				var test = hexRegex.test(scope.options[x].value.trim());
+				console.log(test);
+				if (test)
+				{				
+					scope.options[x].label =  $sce.trustAsHtml('<span style="background-color: '+scope.options[x].value+'"></span>');
+				}
+				else
+				{
+					scope.options[x].label =  $sce.trustAsHtml(scope.options[x].value);
+				}
+			}
+
+			var html = '<span ng-repeat="option in options" >' +
+							'<input ng-model="$parent.model" type="radio" name="{{code}}" id="{{code + $index}}" ng-value="option.value" />' +
+							'<label for="{{code + $index}}" ng-bind-html="option.label"></label>' +
+						'</span>';
+
+			// dynamically compile the HTML so that we don't put Angular into an infinite loop
+			elem.replaceWith($compile(html)(scope));
+		}
+
+		return {
+			link: link,
+			scope: {
+				options: '=',
+				code: '=',
+				model: '='
+			}
+		}
+	}]);
+
 })(angular);

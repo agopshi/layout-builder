@@ -21,6 +21,34 @@ $elementProvider->register('html', function($values) {
 	'label' => 'HTML',
 	'fields' => array(
 		array(
+			'label' => 'Background Color',
+			'code' => 'background_color',
+			'type' => 'radio',
+			'options' => array(
+				array(
+					'label' => 'Red',
+					'value' => '#900'
+				),
+				array(
+					'label' => 'Blue',
+					'value' => '#009'
+				),
+				array(
+					'label' => 'Green',
+					'value' => '#090'
+				),
+				array(
+					'label' => 'White',
+					'value' => '#FFF'
+				),
+				array(
+					'label' => 'Black',
+					'value' => '#000'
+				)
+			),
+			'default' => '#900'
+		),
+		array(
 			'label' => 'HTML',
 			'code' => 'html',
 			'type' => 'wysiwyg',
@@ -130,7 +158,7 @@ $elementProvider->register('list', function($values) {
 				)
 			),
 			'default' => 'ordered'
-		),
+		),		
 		array(
 			'label' => 'Items',
 			'code' => 'items',

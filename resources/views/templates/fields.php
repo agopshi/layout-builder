@@ -14,12 +14,18 @@
 						ng-model="values[field.code]"						
 						ckeditor="field.options" ></textarea>
 				</div>
-				<div ng-switch-when="select">					
+				<div ng-switch-when="select">
 					<div lb-fields-select
 						is-chosen="field.chosen"
 						is-multiple="field.multiple"
 						model="values[field.code]"
 						options="field.options"></div>
+				</div>
+				<div ng-switch-when="radio">
+					<div lb-fields-radio						
+						options="field.options"
+						model="values[field.code]"
+						code="field.code"></div>
 				</div>
 				<div ng-switch-when="list" class="lb-field-list">
 					<div ui-sortable ng-model="values[field.code]">
