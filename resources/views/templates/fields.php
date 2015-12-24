@@ -1,6 +1,6 @@
 <script type="text/ng-template" id="/templates/fields.html">
 	<div class="lb-fields">
-		<div ng-repeat="field in fields" class="lb-field">
+		<div lb-field="field" values="values" ng-repeat="field in fields" class="lb-field">
 			<div class="lb-field-label">{{field.label}}</div>
 			<div ng-switch="field.type" class="lb-field-value">
 				<div ng-switch-when="text">
