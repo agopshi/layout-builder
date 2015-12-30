@@ -255,19 +255,31 @@
 		{
 			
 			var hexRegex = new RegExp("#[0-9A-F]{3,6}", "i");
+			var extras = false;
 			for (x in scope.options) 
 			{
 				scope.options[x].title =  scope.options[x].label + ': ' + scope.options[x].value;
 
-				var test = hexRegex.test(scope.options[x].value.trim());				
-				if (test)
+				var hexColor = hexRegex.test(scope.options[x].value.trim());				
+				if (hexColor)
 				{				
+					extras = true;
 					scope.options[x].label =  $sce.trustAsHtml('<span style="background-color: '+scope.options[x].value+'"></span>');
 				}
 				else
 				{
 					scope.options[x].label =  $sce.trustAsHtml(scope.options[x].value);
 				}
+			}
+
+			if (extras)
+			{
+				var y = scope.options.length;
+				scope.options[y] = {} ;
+				scope.options[y].title =  'No Color';
+				scope.options[y].label =  $sce.trustAsHtml('No Color');
+				scope.options[y].value =  '';
+				
 			}
 
 			var html = '<span ng-repeat="option in options" >' +
