@@ -22,8 +22,9 @@
 			if (typeof scope.field.show_if !== 'undefined')
 			{
 				scope.$watch(
-					'values', 
-					function(newValue, oldValue) {
+					function() {
+						// parse and evaluate the show_if Angular expression, providing
+						// the values of the fields as the locals of the expression
 						var b = false;
 						
 						try {
@@ -32,7 +33,11 @@
 							b = false;
 						}
 						
-						if (b)
+						return b;
+					},
+					function(newValue, oldValue) {
+						// newValue is the value of the show_if expression
+						if (newValue)
 						{
 							scope.show();
 						}
