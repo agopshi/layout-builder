@@ -229,7 +229,10 @@
 			if (scope.isMultiple)
 			{
 				attributes.push('multiple');
-				scope.model = []; 			//Multiple select boxes need an array as the model.
+				if (!angular.isArray(scope.model))
+				{
+					scope.model = []; 			//Multiple select boxes need an array as the model.
+				}
 			}
 			
 			attributes.push('ng-model="model"');
