@@ -1,0 +1,44 @@
+.lb-builder {
+	.lb-metabox {
+		@include cf; 
+		background-color: $LB_metaBoxBgColor;
+		padding-top: 35px ; 
+		padding-bottom: 35px; 
+		
+		.lb-field-value {
+			padding:0; 
+		}
+		
+		select {
+			padding: 0.5em 1em; 
+		}
+	}
+}
+
+.lb-metabox-title-slug, 
+.lb-field-language  {
+	.lb-fields,
+	.lb-field {
+		display: block; 
+	}
+	
+	.lb-field {
+		float: left;
+		margin-right: 35px; 
+	}
+	
+	.lb-field-label {
+		font-weight: 600;
+	}
+}
+
+.lb-actions {
+	.back-to-wordpress {
+		
+	}
+	
+	.btn {
+		font-size:1em;
+		padding: 0.5em 1em; 
+	}
+}

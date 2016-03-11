@@ -31,6 +31,14 @@
 		}
 	}
 
+	input[type="text"],
+	input[type="email"],
+	input[type="password"] {
+		background-color: $LB_inputBgColor;
+		border: none; 
+		padding: 0.5em 1em; 
+	}
+	
 	input[type="radio"],
 	input[type="radio"] + label,
 	input[type="radio"] + label > span,
@@ -55,6 +63,10 @@
 	input[type="radio"] + label,
 	input[type="checkbox"] + label {
 		margin-right: 0.75em;
+	}
+	
+	select {
+		padding: 0.5em 1em; 
 	}
 }
 

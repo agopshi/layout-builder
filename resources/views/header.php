@@ -1,3 +1,3 @@
 <?php echo LayoutBuilder\view('head', $args); ?>
 
-<header>Layout Builder Header</header>
+<header class="lb-header">Layout Builder Header</header>

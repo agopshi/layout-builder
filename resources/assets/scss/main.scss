@@ -2,10 +2,24 @@
 @import 'vendor/jquery-ui.structure';
 
 @import 'partials/mixins';
-
+@import 'partials/variables';
 @import 'components/fields';
+@import 'components/metabox';
+.lb-header {
+	font-size: 1.571em;
+	padding: .5em 2.100em;
+	background-color: $LB_headerBgColor; 
+	color: $white; 
+}
+
+footer {
+	background-color: $LB_footerBgColor;
+	padding: 0.5em 3em;
+	color: $white; 
+}
 
 .lb-builder {
+	margin: 0 3em; 
 	input,
 	textarea,
 	select {
@@ -27,6 +41,15 @@
 .lb-cols {
 	@include clearfix;
 }
+
+.lb-left {
+	float: left;
+}
+
+.lb-right {
+	float: right;
+}
+
 
 .lb-meta {
 	margin: 0.5em 0;
@@ -50,12 +73,13 @@
 	}
 }
 
+
 .lb-addButton {
-	display: block;
-	width: 100%;
+	display: inline-block;
 	box-sizing: border-box;
-	padding: 1em 0;
+	padding: 1em 2em;
 	text-align: center;
 	cursor: pointer;
-	border: 1px dashed orange;
+	border: $LB_addButtonBorderSize dashed $LB_addButtonBorderColor;
+	border-radius: $LB_addButtonBorderRadius; 
 }
