@@ -11,4 +11,19 @@ $config->setRouteHandlerUrl('/layout-builder/public/example/route_handler.php');
 // add example front-end styles
 $config->addStyle($config->getPublicUrl('css/example.css'));
 
+$config->setLanguages(array(
+	array(
+		'label' => 'English',
+		'code' => 'en'
+	),
+	array(
+		'label' => 'Spanish',
+		'code' => 'es'
+	),
+	array(
+		'label' => 'French',
+		'code' => 'fr'
+	)
+));
+
 return $config;

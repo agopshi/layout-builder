@@ -4,10 +4,16 @@ namespace LayoutBuilder;
 
 class Config
 {
-	protected $_baseUrl;
-	protected $_routeHandlerUrl;
+	protected $_baseUrl = '/';
+	protected $_routeHandlerUrl = '/';
 	protected $_styles = array();
 	protected $_scripts = array();
+	protected $_languages = array(
+		array(
+			'label' => 'English',
+			'code' => 'en'
+		)
+	);
 
 	public function __construct()
 	{
@@ -57,5 +63,20 @@ class Config
 	public function getScripts()
 	{
 		return $this->_scripts;
+	}
+	
+	public function setLanguages($languages)
+	{
+		$this->_languages = $languages;
+	}
+	
+	public function getLanguages()
+	{
+		return $this->_languages;
+	}
+	
+	public function getLanguagesJson()
+	{
+		return json_encode($this->getLanguages());
 	}
 }

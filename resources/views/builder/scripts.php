@@ -1,5 +1,7 @@
 <?php
 $config = $args['config'];
+$languagesJson = $config->getLanguagesJson();
+
 $elementProvider = $args['elementProvider'];
 $elementTypesJson = $elementProvider->getTypesJson();
 
@@ -22,22 +24,11 @@ $state = $args['state'];
 		COL_SIZES: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
 
 		ELEMENT_TYPES: <?php echo $elementTypesJson; ?>,
-		
-		ROW_FLUIDITIES: ['fixed', 'fluid'],
 
 		/**
 		 * @todo Abstract these out somewhere
 		 */
-		LANGUAGES: [
-			{
-				label: 'English',
-				code: 'en'
-			},
-			{
-				label: 'Spanish',
-				code: 'es'
-			}
-		],
+		LANGUAGES: <?php echo $languagesJson; ?>,
 
 		load: {
 			id: <?php echo json_encode($id); ?>,
@@ -48,10 +39,6 @@ $state = $args['state'];
 	};
 </script>
 
-<script>
-    var CKEDITOR_BASEPATH = '<?php echo $config->getPublicUrl('lib/ckeditor/'); ?>';
-</script>
 <script src="<?php echo $config->getPublicUrl('js/vendor.js'); ?>"></script>
 <script src="<?php echo $config->getPublicUrl('js/modules/fields.js'); ?>"></script>
 <script src="<?php echo $config->getPublicUrl('js/modules/builder.js'); ?>"></script>
-<script src="<?php echo $config->getPublicUrl('lib/ckeditor/ckeditor.js'); ?>"></script>
